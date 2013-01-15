@@ -14,4 +14,6 @@ before_script:
 script: 
   - ./node_modules/.bin/yeoman build --disable-insight
 after_script:
+  - git config --global user.email "pwmckenna@gmail.com"
+  - git config --global user.name "Patrick Williams"
   - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel :gh-pages > /dev/null 2>&1
