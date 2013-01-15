@@ -1,9 +1,9 @@
 language: 
-	node_js
+  node_js
 node_js:
-  	- 0.8
-	- 0.9
-before_script:
-	gem install compass
-script:
-	./node_modules/.bin/yeoman build --disable-insight
+  - 0.8
+  - 0.9
+before_script: 
+  gem install compass
+script: 
+  ./node_modules/.bin/yeoman build --disable-insight
