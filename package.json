@@ -1,8 +1,8 @@
 {
   "name": "mduel",
-  "description": "The best project ever.",
+  "description": "Marshmallow Duel.",
   "version": "0.1.0",
-  "homepage": "https://github.com/pwmckenna/mduel_node",
+  "homepage": "https://pwmckenna.github.com/mduel",
   "author": {
     "name": "Patrick Williams",
     "email": "pwmckenna@gmail.com",
@@ -10,16 +10,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/pwmckenna/mduel_node.git"
+    "url": "git://github.com/pwmckenna/mduel.git"
   },
   "bugs": {
-    "url": "https://github.com/pwmckenna/mduel_node/issues"
+    "url": "https://github.com/pwmckenna/mduel/issues"
   },
   "licenses": [
     {
     }
   ],
-  "main": "lib/mduel",
+  "main": "server/mduel",
   "engines": {
     "node": ">= 0.6.0"
   },
