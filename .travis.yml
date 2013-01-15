@@ -17,11 +17,13 @@ after_script:
   - env
   - git pull
   - git branch -D gh-pages
-  - git checkout --orphan gh-pages
+  - git push origin :gh-pages
+  - git checkout -b gh-pages
   - git rm -r --cached .
   - git add -f dist/.
   - git rm -f dist/dist
-  - git mv -f dist/. .
   - git clean -df
+  - git mv -f dist/* .
+  - git mv -f dist/.* .
   - git commit -m "Add built output"
   - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel gh-pages
