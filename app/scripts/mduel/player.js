@@ -21,10 +21,11 @@ var definePlayer = function(
       var that = {};
      
       that.location = 'platform';
+      that.firebase = spec.firebase;
       
       that.playerState = Mduel.PlayerState.playerState({ 
          player: that, 
-         ref: spec.ref
+         ref: that.firebase
       });
       
       that.id = spec.id;
@@ -95,16 +96,16 @@ var definePlayer = function(
       }
 
       that.name = function() {
-         return spec.ref.name();
+         return that.firebase.name();
       }
 
       that.remove = function() {
-         spec.ref.remove();
+         that.firebase.remove();
       }
 
       that.get = function(key) {
          var ret;
-         spec.ref.child(key).once('value', function(dataSnapshot) {
+         that.firebase.child(key).once('value', function(dataSnapshot) {
             ret = dataSnapshot.val();
          });
          if(typeof ret === 'undefined') {
@@ -115,10 +116,10 @@ var definePlayer = function(
 
       that.set = function(key, value) {
          var original;
-         spec.ref.once('value', function(dataSnapshot) {
+         that.firebase.once('value', function(dataSnapshot) {
             original = dataSnapshot.val();
          });
-         spec.ref.transaction(function(current) {
+         that.firebase.transaction(function(current) {
             var keys = key.split('/');
             var modify = current;
             for(var i = 0; i < keys.length - 1; i++) {
@@ -135,10 +136,10 @@ var definePlayer = function(
 
       that.change = function(key, value) {
          var original;
-         spec.ref.once('value', function(dataSnapshot) {
+         that.firebase.once('value', function(dataSnapshot) {
             original = dataSnapshot.val();
          });
-         spec.ref.transaction(function(current) {
+         that.firebase.transaction(function(current) {
             var keys = key.split('/');
             var modify = current;
             for(var i = 0; i < keys.length - 1; i++) {
@@ -379,7 +380,7 @@ var definePlayer = function(
    Mduel.Player.initializeLocalPlayer = function(ref) {
       return Mduel.Player.player({
          spriteImage: Mduel.Images.player1,
-         ref: ref,
+         firebase: ref,
          id: 0
       });
    };

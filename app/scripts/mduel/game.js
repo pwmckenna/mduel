@@ -45,7 +45,7 @@ var defineGame = function(
          if(!local) {
             var player = Mduel.Player.player({
                spriteImage: Mduel.Images.player2,
-               ref: childSnapshot.ref(),
+               firebase: childSnapshot.ref(),
                id: 0
             });
             Mduel.Game.remotePlayers.push(player);
