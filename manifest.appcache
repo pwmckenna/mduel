@@ -1,0 +1,54 @@
+# loading images (undefined, #undefined)
+# browser images loaded (undefined, #undefined)
+# spriteSheet loaded (undefined, #undefined)
+# sprites loaded (undefined, #undefined)
+# animation loaded (undefined, #undefined)
+# animations loaded (undefined, #undefined)
+# util loaded (undefined, #undefined)
+# stage loaded (undefined, #undefined)
+# keyboard loaded (undefined, #undefined)
+# playerState loaded (undefined, #undefined)
+# player loaded (undefined, #undefined)
+# pickups loaded (undefined, #undefined)
+# game loaded (undefined, #undefined)
+CACHE MANIFEST
+
+# Time: Tue Jan 15 2013 23:11:11 GMT+0000 (UTC)
+# This manifest was created by confess.js, http://github.com/jamesgpearce/confess
+#
+# Retrieved URL: http://localhost:3501/
+# User-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.12 Safari/535.11
+#
+# Config:
+#  task: appcache
+#  userAgent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.12 Safari/535.11
+#  wait: 0
+#  consolePrefix: #
+#  verbose: true
+#  appcache:
+#   urlsFromDocument: true
+#   urlsFromRequests: false
+#   cacheFilter: .*
+#   networkFilter: null
+#  url: http://localhost:3501
+#  configFile: /home/travis/builds/pwmckenna/mduel/node_modules/yeoman/lib/support/confess.json
+
+CACHE:
+http://www.google-analytics.com/ga.js
+images/000f12da.spawn_platform.bmp
+images/2c42a47e.rope_anchor.bmp
+images/5895c36a.powerup_spawn.png
+images/986a9ff9.pickupSprites.png
+images/ab5ead07.playerSprite1.png
+images/c1473d39.marshmallowSprites.gif
+images/c1bb8d7c.playerSprite2.png
+images/d0469929.main_platform.bmp
+images/fe842aee.mallow.png
+scripts/a88781c3.amd-app.js
+scripts/vendor/2ae6114a.firebase.js
+scripts/vendor/5c47faec.seedrandom.js
+scripts/vendor/cf69c6f2.modernizr.min.js
+styles/9bb6d29e.main.css
+
+NETWORK:
+*
