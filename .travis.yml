@@ -16,7 +16,7 @@ script:
 after_script:
   - git config --global user.email "pwmckenna@gmail.com"
   - git config --global user.name "Patrick Williams"
-  - git submodule add -b gh-pages https://${GH_TOKEN}github.com/pwmckenna/mduel site
+  - git submodule add -b gh-pages https://${GH_TOKEN}@github.com/pwmckenna/mduel site
   - echo "GIT STATUS AFTER SUBMODULE ADDED"
   - git status
   - cp -R dist/* site
