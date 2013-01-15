@@ -2,6 +2,9 @@ language:
   node_js
 node_js:
   - 0.8
+branches:
+  only:
+    - master
 env:
   global:
     - secure: "ZMqyhEGxTPx25aTCD5b0uMNs1rbbWfCy2GmHVuJZ7qph/gkA8N1qz0ko3E1a\ncA9gwMngbhlq/+YQrmvuvgPkEtYNZCuzPibUDATQdHcEZPSI4r4JRFdk9kTG\ncTCrubDQNXsdZ79NdcNsXyY45PiGDLTmnFQWucYgjuD6q2MlR20="
@@ -11,6 +14,8 @@ before_script:
 script: 
   - ./node_modules/.bin/yeoman build --disable-insight
 after_script:
+  - env
+  - git pull
   - git branch -D gh-pages
   - git checkout -B gh-pages
   - git add -f dist/.
