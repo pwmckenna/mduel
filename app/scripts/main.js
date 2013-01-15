@@ -2,7 +2,10 @@ require.config({
   shim: {
 	'components/underscore/underscore': {
 		exports: '_'
-	}        
+	},
+	'vendor/firebase': {
+		exports: 'Firebase'
+	}
   },
 
   paths: {
