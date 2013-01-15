@@ -2,8 +2,17 @@ language:
   node_js
 node_js:
   - 0.8
+env:
+  global:
+    - secure: "ZMqyhEGxTPx25aTCD5b0uMNs1rbbWfCy2GmHVuJZ7qph/gkA8N1qz0ko3E1a\ncA9gwMngbhlq/+YQrmvuvgPkEtYNZCuzPibUDATQdHcEZPSI4r4JRFdk9kTG\ncTCrubDQNXsdZ79NdcNsXyY45PiGDLTmnFQWucYgjuD6q2MlR20="
 before_script:
   - gem install compass
   - ./node_modules/.bin/bower install
 script: 
   - ./node_modules/.bin/yeoman build --disable-insight
+after_script:
+  - git branch -D gh-pages
+  - git checkout -B gh-pages
+  - git add -f dist/.
+  - git commit -m "Add built output"
+  - git push https://$(GH_TOKEN)@github.com/pwmckenna/mduel gh-pages
