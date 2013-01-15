@@ -25,7 +25,7 @@ after_script:
   - ls -R site
   - cd site
   - echo "GIT STATUS IN SUBMODULE"
-  - git add -f *
+  - git add -f .
   - git commit -am "adding the yeoman build files to gh-pages"
   - echo "GIT STATUS BEFORE PUSH TO GH-PAGES"
   - git status
