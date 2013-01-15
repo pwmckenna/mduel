@@ -3,6 +3,7 @@ language:
 node_js:
   - 0.8
 before_script:
-  gem install compass
+  - gem install compass
+  - ./node_modules/.bin/bower install
 script: 
-  ./node_modules/.bin/bower install; ./node_modules/.bin/yeoman build --disable-insight
+  - ./node_modules/.bin/yeoman build --disable-insight
