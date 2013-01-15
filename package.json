@@ -22,9 +22,6 @@
   "engines": {
     "node": ">= 0.6.0"
   },
-  "scripts": {
-    "test": "node_modules/.bin/yeoman build"
-  },
   "devDependencies": {
     "grunt": "~0.3.17",
     "yeoman": "~0.9.6"
