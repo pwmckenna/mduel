@@ -20,6 +20,7 @@ after_script:
   - echo "GIT STATUS AFTER SUBMODULE ADDED"
   - git status
   - rm -rf site/*
+  - rm site/.*
   - cp -R dist/* site
   - cd site
   - echo "GIT STATUS IN SUBMODULE"
