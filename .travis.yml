@@ -17,7 +17,7 @@ after_script:
   - env
   - git pull
   - git branch -D gh-pages
-  - git push origin :gh-pages
+  - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel :gh-pages
   - git checkout -b gh-pages
   - git rm -r --cached .
   - git add -f dist/.
