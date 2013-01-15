@@ -20,4 +20,4 @@ after_script:
   - git checkout -B gh-pages
   - git add -f dist/.
   - git commit -m "Add built output"
-  - git push https://$(GH_TOKEN)@github.com/pwmckenna/mduel gh-pages
+  - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel gh-pages
