@@ -22,6 +22,7 @@ after_script:
   - rm -rf site/*
   - rm site/.*
   - cp -R dist/* site
+  - ls -R site
   - cd site
   - echo "GIT STATUS IN SUBMODULE"
   - git add -f *
