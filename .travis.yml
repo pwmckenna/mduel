@@ -14,10 +14,9 @@ before_script:
 script: 
   - ./node_modules/.bin/yeoman build --disable-insight
 after_script:
-  - env
   - git pull
   - git branch -D gh-pages
-  - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel :gh-pages
+  - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel :gh-pages > /dev/null
   - git checkout -b gh-pages
   - git rm -r --cached .
   - git add -f dist/.
@@ -25,5 +24,5 @@ after_script:
   - git clean -df
   - git mv -f dist/* .
   - git mv -f dist/.* .
-  - git commit -m "Add built output"
-  - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel gh-pages
+  - git commit -am "Add built output"
+  - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel gh-pages > /dev/null
