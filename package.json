@@ -1,0 +1,37 @@
+{
+  "name": "mduel",
+  "description": "The best project ever.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/pwmckenna/mduel_node",
+  "author": {
+    "name": "Patrick Williams",
+    "email": "pwmckenna@gmail.com",
+    "url": "pwmckenna.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pwmckenna/mduel_node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pwmckenna/mduel_node/issues"
+  },
+  "licenses": [
+    {
+    }
+  ],
+  "main": "lib/mduel",
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.17"
+  },
+  "keywords": [],
+  "dependencies": {
+    "underscore": "~1.4.3",
+    "faye-websocket": "~0.4.3"
+  }
+}
