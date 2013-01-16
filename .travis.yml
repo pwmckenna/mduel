@@ -7,7 +7,10 @@ branches:
     - master
 env:
   global:
-    # GH_TOKEN is the oauth token generated as described at https://help.github.com/articles/creating-an-oauth-token-for-command-line-use
+    # GH_TOKEN is the oauth token generated as described at 
+    # https://help.github.com/articles/creating-an-oauth-token-for-command-line-use
+    # It must be encrypted using the travis gem
+    # http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables
     - secure: "ZMqyhEGxTPx25aTCD5b0uMNs1rbbWfCy2GmHVuJZ7qph/gkA8N1qz0ko3E1a\ncA9gwMngbhlq/+YQrmvuvgPkEtYNZCuzPibUDATQdHcEZPSI4r4JRFdk9kTG\ncTCrubDQNXsdZ79NdcNsXyY45PiGDLTmnFQWucYgjuD6q2MlR20="
     - GH_USER: pwmckenna
     - GH_PROJECT: mduel
@@ -23,6 +26,7 @@ before_script:
   - npm install yeoman -g
   - bower install
 script:
+  # We want to gate on passing tests and a successful build
   - yeoman test
   - yeoman build --disable-insight
 after_script:
