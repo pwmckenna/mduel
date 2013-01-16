@@ -7,18 +7,28 @@ branches:
     - master
 env:
   global:
+    # GH_TOKEN is the oauth token generated as described at https://help.github.com/articles/creating-an-oauth-token-for-command-line-use
     - secure: "ZMqyhEGxTPx25aTCD5b0uMNs1rbbWfCy2GmHVuJZ7qph/gkA8N1qz0ko3E1a\ncA9gwMngbhlq/+YQrmvuvgPkEtYNZCuzPibUDATQdHcEZPSI4r4JRFdk9kTG\ncTCrubDQNXsdZ79NdcNsXyY45PiGDLTmnFQWucYgjuD6q2MlR20="
+    - GH_USER: pwmckenna
+    - GH_PROJECT: mduel
+    - GH_NAME: Patrick Williams
+    - GH_EMAIL: pwmckenna@gmail.com
+
 before_script:
-  - env
+  # install dependencies
   - gem install compass
-  - ./node_modules/.bin/bower install
+  - gem install jpegtran
+  - gem install optipng
+  - npm install bower -g
+  - npm install yeoman -g
+  - bower install
 script:
-  - ./node_modules/.bin/yeoman test
-  - ./node_modules/.bin/yeoman build --disable-insight
+  - yeoman test
+  - yeoman build --disable-insight
 after_script:
-  - git config --global user.email "pwmckenna@gmail.com"
-  - git config --global user.name "Patrick Williams"
-  - git submodule add -b gh-pages https://${GH_TOKEN}@github.com/pwmckenna/mduel site
+  - git config --global user.email "${GH_EMAIL}"
+  - git config --global user.name "${GH_NAME}"
+  - git submodule add -b gh-pages https://${GH_TOKEN}@github.com/${GH_USERNAME}/${GH_PROJECT} site
   - cd site
   - git checkout gh-pages
   - git rm -r .
@@ -26,4 +36,4 @@ after_script:
   - cp ../dist/.* .
   - git add -f .
   - git commit -am "adding the yeoman build files to gh-pages"
-  - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel gh-pages > /dev/null 2>&1
+  - git push https://${GH_TOKEN}@github.com/${GH_USERNAME}/${GH_PROJECT} gh-pages > /dev/null 2>&1
