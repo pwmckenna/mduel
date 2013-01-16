@@ -22,10 +22,8 @@ after_script:
   - cd site
   - git status
   - git checkout gh-pages
-  - git status
+  - git rm -r .
   - cd ../
-  - rm -rf site/*
-  - rm site/.*
   - cp -R dist/* site
   - ls -R site
   - cd site
