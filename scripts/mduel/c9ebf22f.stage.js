@@ -257,9 +257,9 @@ var defineStage = function(
       
       var rval = new Array();
       
-      var verticalAdjustment = Mduel.Images.ropeAnchor.height;
-      var horizontalAdjustment = Mduel.Images.ropeAnchor.width / 2;
-      
+      var verticalAdjustment = 10; //Mduel.Images.ropeAnchor.height;
+      var horizontalAdjustment = 5; //Mduel.Images.ropeAnchor.width / 2;
+      var spawnHeight = 8; //Mduel.Images.spawn.height;      
       // Translate level and columns to x and y coordinates, calculate start and end points of ropes
       for (var i = 0, len = anchors.length; i < len; i++) {
          var current = anchors[i];
@@ -271,7 +271,7 @@ var defineStage = function(
          
          rval.push({ anchor : { x : current.x, y : current.y },
                      ropeStart : { x : current.x + horizontalAdjustment, y : current.y + verticalAdjustment },
-                     ropeEnd : { x : current.x + horizontalAdjustment, y : current.y + (current.ropeLength * 64) - (Mduel.Images.spawn.height + 1) } });
+                     ropeEnd : { x : current.x + horizontalAdjustment, y : current.y + (current.ropeLength * 64) - (spawnHeight + 1) } });
       }
       
       return rval;
