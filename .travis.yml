@@ -23,10 +23,8 @@ after_script:
   - git status
   - git checkout gh-pages
   - git rm -r .
-  - cd ../
-  - cp -R dist/* site
-  - ls -R site
-  - cd site
+  - cp -R ../dist/* .
+  - ls -R
   - echo "GIT STATUS IN SUBMODULE"
   - git branch
   - git status
