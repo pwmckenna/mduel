@@ -22,7 +22,7 @@ after_script:
   - git checkout gh-pages
   - git rm -r .
   - cp -R ../dist/* .
-  - cp ../dist.* .
+  - cp ../dist/.* .
   - git add -f .
   - git commit -am "adding the yeoman build files to gh-pages"
   - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel gh-pages > /dev/null 2>&1
