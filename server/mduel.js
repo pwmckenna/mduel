@@ -14,7 +14,7 @@
 	var onPlayerAdded = function(dataSnapshot) {
 		console.log('onPlayerAdded');
 		var player = Player.player({
-           ref: dataSnapshot.ref()
+           firebase: dataSnapshot.ref()
         });
 		players.push(player);
 	};
