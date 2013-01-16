@@ -13,7 +13,7 @@
 # game loaded (undefined, #undefined)
 CACHE MANIFEST
 
-# Time: Wed Jan 16 2013 00:15:34 GMT+0000 (UTC)
+# Time: Wed Jan 16 2013 00:16:24 GMT+0000 (UTC)
 # This manifest was created by confess.js, http://github.com/jamesgpearce/confess
 #
 # Retrieved URL: http://localhost:3501/
@@ -48,7 +48,7 @@ scripts/a88781c3.amd-app.js
 scripts/vendor/2ae6114a.firebase.js
 scripts/vendor/5c47faec.seedrandom.js
 scripts/vendor/cf69c6f2.modernizr.min.js
-styles/990dbf75.main.css
+styles/9bb6d29e.main.css
 
 NETWORK:
 *
