@@ -11,25 +11,15 @@ env:
 before_script:
   - gem install compass
   - ./node_modules/.bin/bower install
-script: 
-  - ./node_modules/.bin/yeoman build --disable-insight
 after_script:
+  - ./node_modules/.bin/yeoman build --disable-insight
   - git config --global user.email "pwmckenna@gmail.com"
   - git config --global user.name "Patrick Williams"
   - git submodule add -b gh-pages https://${GH_TOKEN}@github.com/pwmckenna/mduel site
-  - echo "GIT STATUS AFTER SUBMODULE ADDED"
-  - git status
   - cd site
-  - git status
   - git checkout gh-pages
   - git rm -r .
   - cp -R ../dist/* .
-  - ls -R
-  - echo "GIT STATUS IN SUBMODULE"
-  - git branch
-  - git status
   - git add -f .
   - git commit -am "adding the yeoman build files to gh-pages"
-  - echo "GIT STATUS BEFORE PUSH TO GH-PAGES"
-  - git status
   - git push https://${GH_TOKEN}@github.com/pwmckenna/mduel gh-pages > /dev/null 2>&1
