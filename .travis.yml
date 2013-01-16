@@ -9,6 +9,7 @@ env:
   global:
     - secure: "ZMqyhEGxTPx25aTCD5b0uMNs1rbbWfCy2GmHVuJZ7qph/gkA8N1qz0ko3E1a\ncA9gwMngbhlq/+YQrmvuvgPkEtYNZCuzPibUDATQdHcEZPSI4r4JRFdk9kTG\ncTCrubDQNXsdZ79NdcNsXyY45PiGDLTmnFQWucYgjuD6q2MlR20="
 before_script:
+  - env
   - gem install compass
   - ./node_modules/.bin/bower install
 script:
