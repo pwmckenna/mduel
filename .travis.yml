@@ -19,6 +19,11 @@ after_script:
   - git submodule add -b gh-pages https://${GH_TOKEN}@github.com/pwmckenna/mduel site
   - echo "GIT STATUS AFTER SUBMODULE ADDED"
   - git status
+  - cd site
+  - git status
+  - git checkout gh-pages
+  - git status
+  - cd ../
   - rm -rf site/*
   - rm site/.*
   - cp -R dist/* site
