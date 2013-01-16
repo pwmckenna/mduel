@@ -11,8 +11,10 @@ env:
 before_script:
   - gem install compass
   - ./node_modules/.bin/bower install
-after_script:
+script:
+  - ./node_modules/.bin/yeoman test
   - ./node_modules/.bin/yeoman build --disable-insight
+after_script:
   - git config --global user.email "pwmckenna@gmail.com"
   - git config --global user.name "Patrick Williams"
   - git submodule add -b gh-pages https://${GH_TOKEN}@github.com/pwmckenna/mduel site
