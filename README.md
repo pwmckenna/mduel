@@ -1,3 +1,6 @@
+#[Play the game!](pwmckenna.github.com/mduel)
+
+
 #Dependencies
 * [Yeoman](http://yeoman.io) Needed for testing, building, etc
 * ```npm install``` Installs server dependencies
