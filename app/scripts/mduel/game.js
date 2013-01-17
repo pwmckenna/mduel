@@ -33,7 +33,7 @@ var defineGame = function(
       
       Mduel.Game.localPlayers = [];
       Mduel.Game.remotePlayers = [];
-      Mduel.Game.pickups = Mduel.Pickups.pickups(firebase.child('pickups'));
+      Mduel.Game.pickups = new Mduel.Pickups.Pickups();
       Mduel.Game.stage = Mduel.Stage.stage();
       Mduel.Game.addLocalPlayer();
       Mduel.Game.addLocalPlayer();
@@ -86,7 +86,7 @@ var defineGame = function(
 
    Mduel.Game.update = function(elapsedTime) {
       Mduel.Game.stage.update(elapsedTime);
-      //Mduel.Game.pickups.update(elapsedTime);
+      Mduel.Game.pickups.update(elapsedTime);
       for (var i = 0, len = Mduel.Game.localPlayers.length; i < len; i++) {
          Mduel.Game.localPlayers[i].update(elapsedTime);
       }
