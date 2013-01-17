@@ -16,17 +16,9 @@
 # setState stand (undefined, #undefined)
 # setState stand (undefined, #undefined)
 # setState stand (undefined, #undefined)
-INDEX_SIZE_ERR: DOM Exception 1: Index or size was negative, or greater than the allowed value.
-
-  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
-  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
-  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
-  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
-  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
-  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
 CACHE MANIFEST
 
-# Time: Thu Jan 17 2013 18:03:39 GMT+0000 (UTC)
+# Time: Thu Jan 17 2013 18:27:36 GMT+0000 (UTC)
 # This manifest was created by confess.js, http://github.com/jamesgpearce/confess
 #
 # Retrieved URL: http://localhost:3501/
@@ -50,16 +42,16 @@ CACHE:
 http://www.google-analytics.com/ga.js
 images/000f12da.spawn_platform.bmp
 images/2c42a47e.rope_anchor.bmp
-images/2c8f14a4.playerSprite3.png
+images/2c8f14a4.playerSpriteRemote.png
 images/5895c36a.powerup_spawn.png
+images/6e4ae6a5.playerSpriteComputer.png
 images/986a9ff9.pickupSprites.png
 images/ab5ead07.playerSprite1.png
-images/be3a273b.playerSprite4.png
 images/c1473d39.marshmallowSprites.gif
 images/c1bb8d7c.playerSprite2.png
 images/d0469929.main_platform.bmp
 images/fe842aee.mallow.png
-scripts/e39e9c62.amd-app.js
+scripts/b0a463fc.amd-app.js
 scripts/vendor/5c47faec.seedrandom.js
 scripts/vendor/cf69c6f2.modernizr.min.js
 styles/9bb6d29e.main.css
