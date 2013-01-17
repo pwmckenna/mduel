@@ -24,6 +24,10 @@ var defineMovingObject = function(
 		initialize: function() {      
 		},
 
+		getBoundingBox: function() {
+			throw 'getBoundingBox must be defined in the inheriting object';
+		},
+
 		//all the gets
 		getPositionX: function() {
 			return this.get('x');

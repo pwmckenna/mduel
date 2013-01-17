@@ -5,10 +5,8 @@ var memoize = function(func, hasher) {
       return hasOwnProperty.call(memo, key) ? memo[key] : (memo[key] = func.apply(this, arguments));
    };
 };
-/**
- *
-**/
-var calculateBoundingBox = memoize(function(image, frame) {
+
+var calculateBoundingBox = memoize(function(image, flip, frame) {
    var x = frame.x;
    var y = frame.y;
    var width = frame.width;
@@ -35,16 +33,22 @@ var calculateBoundingBox = memoize(function(image, frame) {
          }
       }
    }
-   var ret = {
-      x: left,
-      y: top,
-      width: right - left,
-      height: bottom - top
-   };         
-   return ret;
-}, function(image, frame) { 
-   return '' + image + JSON.stringify(frame); 
-});
+   if(flip) {
+      return {
+         x: width - left - (right - left),
+         y: top,
+         width: right - left,
+         height: bottom - top
+      };         
+   } else {
+      return {
+         x: left,
+         y: top,
+         width: right - left,
+         height: bottom - top
+      };         
+   }
+}, function(image, flip, frame) { return '' + image.src + flip + JSON.stringify(frame); });
 
 var definePlayer = function(
    Images, 
@@ -52,6 +56,7 @@ var definePlayer = function(
    Stage,
    Util,
    MovingObject,
+   Debug,
    _
 ) {
    console.log('player loaded');
@@ -67,6 +72,7 @@ var definePlayer = function(
    Mduel.Stage = Stage;
    Mduel.Util = Util;
    Mduel.MovingObject = MovingObject;
+   Mduel.Debug = Debug;
 
    Mduel.Player.Player = Mduel.MovingObject.extend({
       defaults: _.extend({
@@ -92,12 +98,7 @@ var definePlayer = function(
          var image = this.get('spriteImage');
          var flip = this.get('flip');
          var frame = this.get('playerState').currentAnimation.getSprite();
-         var box = calculateBoundingBox(image, frame);
-
-         if(flip) {
-            box.x = frame.width - box.x - box.width;
-         }
-
+         var box = calculateBoundingBox(image, flip, frame);
          return {
             x: this.getPositionX() + box.x, 
             y: this.getPositionY() + box.y, 
@@ -136,6 +137,13 @@ var definePlayer = function(
 
          if (this.get('flip')) {        
             ctx.restore();      
+         }
+
+         if(Mduel.Debug.debug) {
+            var box = this.getBoundingBox();
+            //draw the bounding box so we can work on collision detection
+            ctx.strokeStyle = "white";
+            ctx.strokeRect(box.x, box.y, box.width, box.height);
          }
       },
       
@@ -246,6 +254,7 @@ if(typeof define !== 'undefined') {
       'mduel/stage',
       'mduel/util',
       'mduel/movingObject',
+      'mduel/debug',
       'underscore'
    ], definePlayer);
 } else if(typeof module !== 'undefined.') {
@@ -255,6 +264,7 @@ if(typeof define !== 'undefined') {
       require('./stage'),
       require('./util'),
       require('./movingObject'),
+      require('./debug'),
       require('underscore')
    );
 }
