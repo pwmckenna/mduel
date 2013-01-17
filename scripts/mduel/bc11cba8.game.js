@@ -5,6 +5,7 @@ var defineGame = function(
    Pickups,
    Keyboard,
    Util,
+   Debug,
    _
 ) {
    console.log('game loaded');
@@ -21,10 +22,9 @@ var defineGame = function(
    Mduel.Stage = Stage;
    Mduel.Keyboard = Keyboard;
    Mduel.Util = Util;
+   Mduel.Debug = Debug;
 
-   Mduel.Game.startGame = function(firebase) {
-      Mduel.Game.debug = false;
-
+   Mduel.Game.startGame = function() {
       Mduel.Game.framerate = 30;
       
       Mduel.Game.lastFrameDrawn = new Date().valueOf();
@@ -32,7 +32,6 @@ var defineGame = function(
       Mduel.Game.state = 'game';
       
       Mduel.Game.localPlayers = [];
-      Mduel.Game.remotePlayers = [];
       Mduel.Game.pickups = new Mduel.Pickups.Pickups();
       Mduel.Game.stage = Mduel.Stage.stage();
       Mduel.Game.addLocalPlayer();
@@ -56,7 +55,7 @@ var defineGame = function(
       };
    }
 
-   Mduel.Game.addLocalPlayer = function(firebase) {
+   Mduel.Game.addLocalPlayer = function() {
       var images = [
          Mduel.Images.player1,
          Mduel.Images.player2,
@@ -90,7 +89,6 @@ var defineGame = function(
       for (var i = 0, len = Mduel.Game.localPlayers.length; i < len; i++) {
          Mduel.Game.localPlayers[i].update(elapsedTime);
       }
-      // We're not responsible for updating the remote players
    }
 
    Mduel.Game.draw = function(elapsedTime) {
@@ -101,10 +99,6 @@ var defineGame = function(
 
       if (Mduel.Game.state == 'game') {
          Mduel.Game.stage.draw(ctx, elapsedTime, canvas.width, canvas.height);
-         for (var i = 0, len = Mduel.Game.remotePlayers.length; i < len; i++) {
-            var player = Mduel.Game.remotePlayers[i];
-            player.draw(ctx, elapsedTime);
-         }
          for (var i = 0, len = Mduel.Game.localPlayers.length; i < len; i++) {
             var player = Mduel.Game.localPlayers[i];
             player.draw(ctx, elapsedTime);
@@ -112,25 +106,19 @@ var defineGame = function(
          Mduel.Game.pickups.draw(ctx, elapsedTime);
       }
       
-      if (Mduel.Game.debug) {
-         var drawBoundingBox = function(player) {
-            var box = player.getBoundingBox();
-            //draw the bounding box so we can work on collision detection
-            ctx.strokeStyle = "red";
-            ctx.strokeRect(box.x, box.y, box.width, box.height);
-         }
-         for (var i = 0, len = Mduel.Game.remotePlayers.length; i < len; i++) {
-            drawBoundingBox(Mduel.Game.remotePlayers[i]);
-         }
-         for (var i = 0, len = Mduel.Game.localPlayers.length; i < len; i++) {
-            drawBoundingBox(Mduel.Game.localPlayers[i]);
-         }
-
+      if (Mduel.Debug.debug) {
          ctx.fillStyle = '#f00';
          ctx.font = 'arial 30px sans-serif';
-
-         ctx.fillText(Mduel.Game.debugText || '', 5, 10);
+         ctx.fillText(Mduel.Debug.debugText || '', 5, 10);
       }
+   }
+
+   Mduel.Game.handlePickupCollisions = function(elapsedTime, player) {
+      Mduel.Game.pickups.each(function(pickup) {
+         if(Mduel.Util.colliding(pickup.getBoundingBox(), player.getBoundingBox())) {
+            Mduel.Game.pickups.remove(pickup);
+         }
+      });
    }
 
    Mduel.Game.handleWallCollisions = function(elapsedTime, player) {
@@ -174,14 +162,11 @@ var defineGame = function(
       for (var i = 0; i < Mduel.Game.localPlayers.length; i++) {
          var player = Mduel.Game.localPlayers[i];
          Mduel.Game.handleWallCollisions(elapsedTime, player);
+         Mduel.Game.handlePickupCollisions(elapsedTime, player);
 
          for (var j = i + 1; j < Mduel.Game.localPlayers.length; j++) {
             var other = Mduel.Game.localPlayers[j];
             Mduel.Game.handlePlayerCollisions(elapsedTime, player, other)
-         }
-         for (var j = 0; j < Mduel.Game.remotePlayers.length; j++) {
-            var other = Mduel.Game.remotePlayers[j];
-            Mduel.Game.handlePlayerCollisions(elapsedTime, player, other);
          }
       }
    }
@@ -197,6 +182,7 @@ if(typeof define !== 'undefined') {
       'mduel/pickups',
       'mduel/keyboard',
       'mduel/util',
+      'mduel/debug',
       'underscore'
    ], defineGame);
 } else if(typeof module !== 'undefined') {
@@ -207,6 +193,7 @@ if(typeof define !== 'undefined') {
       require('./pickups'),
       require('./keyboard'),
       require('./util'),
+      require('./debug'),
       require('underscore')
    );
 }
