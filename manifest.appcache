@@ -13,7 +13,7 @@
 # game loaded (undefined, #undefined)
 CACHE MANIFEST
 
-# Time: Wed Jan 16 2013 22:28:58 GMT+0000 (UTC)
+# Time: Thu Jan 17 2013 00:24:35 GMT+0000 (UTC)
 # This manifest was created by confess.js, http://github.com/jamesgpearce/confess
 #
 # Retrieved URL: http://localhost:3501/
@@ -31,7 +31,7 @@ CACHE MANIFEST
 #   cacheFilter: .*
 #   networkFilter: null
 #  url: http://localhost:3501
-#  configFile: /home/travis/build/pwmckenna/mduel/node_modules/yeoman/lib/support/confess.json
+#  configFile: /home/travis/.nvm/v0.8.17/lib/node_modules/yeoman/lib/support/confess.json
 
 CACHE:
 http://www.google-analytics.com/ga.js
