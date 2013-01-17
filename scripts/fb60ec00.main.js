@@ -20,7 +20,7 @@ require.config({
   }
 });
  
-require(['mduel/game', 'firebase', 'underscore'], function(Game, Firebase) {
+require(['mduel/game', 'mduel/keyboard', 'firebase'], function(Game, Keyboard, Firebase) {
 	var gameFirebase = new Firebase('https://mduel.firebaseio.com/game/');
 	Game.startGame(gameFirebase);
 });

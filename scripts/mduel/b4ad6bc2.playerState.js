@@ -17,7 +17,7 @@ var definePlayerState = function(
       var that = {};
     
       that.player = spec.player;
-    
+
       that.states = {
          stand : {
             animation: 'stand',
@@ -26,12 +26,12 @@ var definePlayerState = function(
             },
             keyDown : function(keyState) {
                if (keyState.lastKey.name == 'left' && keyState.left.pressed && !keyState.right.pressed) {
-                  that.player.setVelocityX(-that.player.constants.runSpeed);
+                  that.player.setVelocityX(-that.player.get('RUN_SPEED'));
                   that.player.setFlip(true);
                   that.setState('run');
                } 
                else if (keyState.lastKey.name == 'right' && keyState.right.pressed && !keyState.left.pressed) {
-                  that.player.setVelocityX(that.player.constants.runSpeed);
+                  that.player.setVelocityX(that.player.get('RUN_SPEED'));
                   that.player.setFlip(false);
                   that.setState('run');
                }
@@ -41,7 +41,7 @@ var definePlayerState = function(
                   if (rope) {
                      that.player.setPositionX(rope.ropeStart.x - 32);
                   
-                     that.player.setVelocityY(that.player.constants.climbSpeed);
+                     that.player.setVelocityY(that.player.get('CLIMB_SPEED'));
                      that.setState('climbing');
                   }
                   else {
@@ -54,7 +54,7 @@ var definePlayerState = function(
                   if (rope) {
                      that.player.setPositionX(rope.ropeStart.x - 32);
                   
-                     that.player.setVelocityY(-that.player.constants.climbSpeed);
+                     that.player.setVelocityY(-that.player.get('CLIMB_SPEED'));
                      that.setState('climbing');
                   }
                   else {
@@ -78,12 +78,12 @@ var definePlayerState = function(
                }
                else if (!keyState.left.pressed && keyState.right.pressed) 
                {
-                  that.player.setVelocityX(that.player.constants.runSpeed);
+                  that.player.setVelocityX(that.player.get('RUN_SPEED'));
                   that.player.setFlip(false);
                } 
                else if (keyState.left.pressed && !keyState.right.pressed) 
                {
-                  that.player.setVelocityX(-that.player.constants.runSpeed);
+                  that.player.setVelocityX(-that.player.get('RUN_SPEED'));
                   that.player.setFlip(true);
                }  
             },
@@ -105,7 +105,7 @@ var definePlayerState = function(
          standJump : {
             animation : 'standJump',
             update : function(elapsed) {
-               if (that.player.getVelocityY() < that.player.constants.maxFallSpeed) {
+               if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
                   that.player.changeVelocityY(1);
                }
 
@@ -124,14 +124,14 @@ var definePlayerState = function(
          runJump : {
             animation : 'runJump',
             update : function(elapsed) {
-               if (that.player.getVelocityY() < that.player.constants.maxFallSpeed) {
+               if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
                   that.player.changeVelocityY(1);
                }
 
                if (that.player.getVelocityY() >= 0) {
                   var platform = that.player.isOnPlatform();
 
-                  if (that.player.getPosition().y >= 320) {
+                  if (that.player.getPositionY() >= 320) {
                      that.player.setVelocity(0, 0);
                      that.player.setPositionY(320);
                      that.setState('disintegrate');
@@ -223,12 +223,12 @@ var definePlayerState = function(
                
                   if (keyState.left.pressed && (!keyState.right.pressed || keyState.left.eventTime > keyState.right.eventTime)) {
                      that.player.setFlip(true);
-                     that.player.setVelocityX(-that.player.constants.runSpeed);
+                     that.player.setVelocityX(-that.player.get('RUN_SPEED'));
                      that.setState('run');
                   }
                   else if (keyState.right.pressed && (!keyState.left.pressed || keyState.right.eventTime > keyState.left.eventTime)) {
                      that.player.setFlip(false);
-                     that.player.setVelocityX(that.player.constants.runSpeed);
+                     that.player.setVelocityX(that.player.get('RUN_SPEED'));
                      that.setState('run');
                   }
                   else {
@@ -253,11 +253,11 @@ var definePlayerState = function(
             },
             keyDown : function(keyState) {
                if (keyState.lastKey.name == 'left') {
-                  that.player.setVelocityX(-that.player.constants.runSpeed);
+                  that.player.setVelocityX(-that.player.get('RUN_SPEED'));
                   that.setState('fall');
                }
                else if (keyState.lastKey.name == 'right') {
-                  that.player.setVelocityX(that.player.constants.runSpeed);
+                  that.player.setVelocityX(that.player.get('RUN_SPEED'));
                   that.setState('fall');
                }
             }
@@ -268,19 +268,19 @@ var definePlayerState = function(
             },
             keyDown : function(keyState) {
                if (keyState.lastKey.name == 'up') {
-                  that.player.setVelocityY(-that.player.constants.climbSpeed);
+                  that.player.setVelocityY(-that.player.get('CLIMB_SPEED'));
                   that.setState('climbing');            
                }
                else if (keyState.lastKey.name == 'down') {
-                  that.player.setVelocityY(that.player.constants.climbSpeed);
+                  that.player.setVelocityY(that.player.get('CLIMB_SPEED'));
                   that.setState('climbing');
                }
                else if (keyState.lastKey.name == 'left') {
-                  that.player.setVelocityX(-that.player.constants.runSpeed);               
+                  that.player.setVelocityX(-that.player.get('RUN_SPEED'));               
                   that.setState('fall');
                }
                else if (keyState.lastKey.name == 'right') {
-                  that.player.setVelocityX(that.player.constants.runSpeed);               
+                  that.player.setVelocityX(that.player.get('RUN_SPEED'));               
                   that.setState('fall');
                }
             }
@@ -288,7 +288,7 @@ var definePlayerState = function(
          ropeFall : {
             animation : 'stand',
             update : function(elapsed) {
-               if (that.player.getVelocityY() < that.player.constants.maxFallSpeed) {
+               if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
                   that.player.changeVelocityY(1);
                }
                
@@ -309,7 +309,7 @@ var definePlayerState = function(
          fall : {
             animation : 'standFall',
             update : function(elapsed) {         
-               if (that.player.getVelocityY() < that.player.constants.maxFallSpeed) {
+               if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
                   that.player.changeVelocityY(1);
                }
                
@@ -338,7 +338,6 @@ var definePlayerState = function(
             update : function(elapsed) {
                if (that.currentAnimation.isFinished()) {
                   that.setState('dead');
-                  that.player.remove();
                }
             }
          },
@@ -346,16 +345,13 @@ var definePlayerState = function(
             animation : 'empty'
          }
       };
-      
-      that.player.firebase.child('state').on('value', function(dataSnapshot) {
-         var state = dataSnapshot.val();
+
+      that.setState = function(state) {
+         console.log('setState', state);
          if (that.states[state]) {
             that.currentState = that.states[state];
             that.currentAnimation = Mduel.Animations[that.currentState.animation]();
          }
-      });
-      that.setState = function(state) {
-         that.player.setState(state);
       }
       
       that.update = function(elapsed) {
@@ -364,6 +360,7 @@ var definePlayerState = function(
          }       
       }   
       
+      that.setState(that.player.get('state'));
       return that;
    }
 

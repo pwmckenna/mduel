@@ -35,37 +35,8 @@ var defineGame = function(
       Mduel.Game.remotePlayers = [];
       Mduel.Game.pickups = Mduel.Pickups.pickups(firebase.child('pickups'));
       Mduel.Game.stage = Mduel.Stage.stage();
-      Mduel.Game.addLocalPlayer(firebase);
-      
-      firebase.child('players').on('child_added', function(childSnapshot, prevChildName) {
-         var local = false;
-         for (var i = 0, len = Mduel.Game.localPlayers.length; i < len; i++) {
-            local = local || (Mduel.Game.localPlayers[i].name() === childSnapshot.name());
-         }
-         if(!local) {
-            var player = Mduel.Player.player({
-               spriteImage: Mduel.Images.player2,
-               firebase: childSnapshot.ref(),
-               id: 0
-            });
-            Mduel.Game.remotePlayers.push(player);
-         }
-      });
-
-      firebase.child('players').on('child_removed', function(childSnapshot) {
-         for(var i = 0, len = Mduel.Game.localPlayers.length; i < len; i++) {
-            if(Mduel.Game.localPlayers[i].name() === childSnapshot.name()) {
-               Mduel.Game.localPlayers.splice(i, 1);
-               break;
-            }
-         }
-         for(var i = 0, len = Mduel.Game.remotePlayers.length; i < len; i++) {
-            if(Mduel.Game.remotePlayers[i].name() === childSnapshot.name()) {
-               Mduel.Game.remotePlayers.splice(i, 1);
-               break;
-            }
-         }
-      });
+      Mduel.Game.addLocalPlayer();
+      Mduel.Game.addLocalPlayer();
 
       window.onkeydown = Mduel.Keyboard.keyDown;
       window.onkeyup = Mduel.Keyboard.keyUp;
@@ -84,30 +55,12 @@ var defineGame = function(
    }
 
    Mduel.Game.addLocalPlayer = function(firebase) {
-      var init = {
-         position: Mduel.Game.generateStartPosition(),
-         velocity: {
-            x: 0,
-            y: 0
-         },
-         box: {
-            x: 0, y: 0, width: 0, height: 0
-         },
-         flip: false,
-         state: 'stand'
-      };
-      var ref = firebase.child('players').push(init);
-      ref.removeOnDisconnect();
-
-      var initPlayer;
-      initPlayer = function(dataSnapshot) {
-         if(_.isEqual(dataSnapshot.val(), init)) {
-            ref.off('value', initPlayer);
-            var player = Mduel.Player.initializeLocalPlayer(ref);
-            Mduel.Game.localPlayers.push(player);
-         }
-      };
-      ref.on('value', initPlayer);      
+      var position =  Mduel.Game.generateStartPosition()
+      var player = new Mduel.Player.Player({
+         x: position.x, 
+         y: position.y
+      });
+      Mduel.Game.localPlayers.push(player);
    }
 
    Mduel.Game.gameLoop = function() {
@@ -172,8 +125,6 @@ var defineGame = function(
 
    Mduel.Game.handleWallCollisions = function(elapsedTime, player) {
       var canvas = document.getElementById('game');
-      var pos = player.get('position');
-      if(!pos) return;
 
       var boundingBox = player.getBoundingBox();
 
@@ -198,7 +149,7 @@ var defineGame = function(
    }
 
    Mduel.Game.handlePlayerCollisions = function(elapsedTime, player1, player2) {
-      if(player1.name() === player2.name()) {
+      if(player1 === player2) {
          return;
       }
       if(!Mduel.Util.colliding(player1.getBoundingBox(), player2.getBoundingBox())) {
