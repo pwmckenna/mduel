@@ -40,7 +40,9 @@ var defineGame = function(
       ]);
       if(Mduel.Game.localPlayers.on('remove', function() {
          if(Mduel.Game.localPlayers.length <= 1) {
-            Mduel.Game.localPlayers.at(0).celebrateVictory();
+            Mduel.Game.localPlayers.each(function(player) {
+               player.celebrateVictory();
+            });
          }
       }));
 
