@@ -12,9 +12,20 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
    Mduel.Util = Util;
    Mduel.Debug = Debug;
 
+   Mduel.Pickups.Types = [
+      'skull',
+      'lightning',
+      'invisibility',
+      'mine',
+      'gun',
+      'explode'
+   ];
+
    Mduel.Pickups.Pickup = MovingObject.extend({
       initialize: function() {
          var bubble = Mduel.Animations.bubble();
+         var type = Mduel.Pickups.Types[Math.floor(Math.random() * Mduel.Pickups.Types.length)];
+         this.set('type', type);
          var image = Mduel.Animations[this.get('type')]();
          this.set('bubble', bubble);
          this.set('image', image);
@@ -77,6 +88,46 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
             ctx.strokeStyle = "white";
             ctx.strokeRect(box.x, box.y, box.width, box.height);
          }
+      },
+
+      killPlayer: function(player) {
+         player.get('playerState').setState('disintegrate');
+         player.setVelocity(0, 0);
+      },
+
+      bestowAbility: function(player) {
+         player.set('pickup', this.get('type'));
+      },
+
+      destroyPlatform: function(platform) {
+
+      },
+
+      handleCollisions: function(elapsedTime, players, stage) {
+         switch(this.get('type')) {
+            case 'skull':
+            players.each(function(player) {
+               if(Mduel.Util.colliding(this.getBoundingBox(), player.getBoundingBox())) {
+                  this.killPlayer(player);
+                  this.collection.remove(this);
+               }
+            }, this);
+            break;
+            case 'lightning':
+            case 'invisibility':
+            case 'mine':
+            case 'gun':
+            players.each(function(player) {
+               if(Mduel.Util.colliding(this.getBoundingBox(), player.getBoundingBox())) {
+                  this.bestowAbility(player);
+                  this.collection.remove(this);
+               }
+            }, this);
+            break;
+            case 'explode':
+            //do something with the stage
+            break;
+         }
       }
    });
 
@@ -88,9 +139,11 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
          this.each(function(pickup) {
             pickup.update(elapsed);
          });
-         if(this.length < 3 && Math.random() < 0.01) {
-            this.create();
-         }
+         _.times(3 - this.length, function() {
+            if(Math.random() < 0.01) {
+               this.create();
+            }
+         }, this);
       },
       
       draw: function(ctx, elapsed) {
@@ -99,25 +152,22 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
          })
       },
 
+      handleCollisions: function(elapsedTime, players, stage) {
+         this.each(function(pickup) {
+            pickup.handleCollisions(elapsedTime, players, stage);
+         });
+      },
+
       create: function() {
          var vx = Math.random() + 0.4;
          var vy = 1.8 - vx;
          vx = Math.random() < 0.5 ? vx : -vx;
          vy = Math.random() < 0.5 ? vy : -vy;
-         var types = [
-            'skull',
-            'lightning',
-            'invisibility',
-            'mine',
-            'gun',
-            'explode'
-         ];
          var pickup = new Mduel.Pickups.Pickup({
             x: 320 - 16,
             y: 20,
             vx: vx,
-            vy: vy,
-            type: types[Math.floor(Math.random() * types.length)]
+            vy: vy
          });
          this.add(pickup);
       }
