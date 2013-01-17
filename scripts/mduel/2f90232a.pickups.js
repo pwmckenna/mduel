@@ -185,13 +185,13 @@ if(typeof define !== 'undefined') {
       'mduel/animations', 
       'mduel/images',
       'mduel/util',
-      'components/underscore/underscore'
+      'underscore'
    ], definePickups);
 } else if(typeof module !== 'undefined') {
    module.exports = definePickups(
       require('../mduel/animations'),
       require('../mduel/images'),
       require('../mduel/util'),
-      require('../components/underscore/underscore')
+      require('underscore')
    );   
 }

@@ -236,7 +236,7 @@ if(typeof define !== 'undefined') {
       'mduel/pickups',
       'mduel/keyboard',
       'mduel/util',
-      'components/underscore/underscore'
+      'underscore'
    ], defineGame);
 } else if(typeof module !== 'undefined') {
    module.exports = defineGame(
@@ -246,6 +246,6 @@ if(typeof define !== 'undefined') {
       require('./pickups'),
       require('./keyboard'),
       require('./util'),
-      require('../components/underscore/underscore')
+      require('underscore')
    );
 }

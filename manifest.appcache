@@ -11,9 +11,10 @@
 # player loaded (undefined, #undefined)
 # pickups loaded (undefined, #undefined)
 # game loaded (undefined, #undefined)
+# function function (undefined, #undefined)
 CACHE MANIFEST
 
-# Time: Thu Jan 17 2013 00:24:35 GMT+0000 (UTC)
+# Time: Thu Jan 17 2013 00:43:31 GMT+0000 (UTC)
 # This manifest was created by confess.js, http://github.com/jamesgpearce/confess
 #
 # Retrieved URL: http://localhost:3501/
@@ -44,8 +45,7 @@ images/c1473d39.marshmallowSprites.gif
 images/c1bb8d7c.playerSprite2.png
 images/d0469929.main_platform.bmp
 images/fe842aee.mallow.png
-scripts/6dd2b354.amd-app.js
-scripts/vendor/2ae6114a.firebase.js
+scripts/9d9e450f.amd-app.js
 scripts/vendor/5c47faec.seedrandom.js
 scripts/vendor/cf69c6f2.modernizr.min.js
 styles/9bb6d29e.main.css
