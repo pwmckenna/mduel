@@ -1,6 +1,6 @@
 define([], function() {
 	return {
-		debug: false,
+		debug: true,
 		debugText: ''
 	};
 });

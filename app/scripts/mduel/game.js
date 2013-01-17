@@ -59,15 +59,15 @@ var defineGame = function(
       var images = [
          Mduel.Images.player1,
          Mduel.Images.player2,
-         Mduel.Images.player3,
-         Mduel.Images.player4
+         Mduel.Images.playerRemote,
+         Mduel.Images.playerComputer
       ]
       var position =  Mduel.Game.generateStartPosition()
       var player = new Mduel.Player.Player({
          x: position.x, 
          y: position.y,
          spriteImage: images[Mduel.Game.localPlayers.length],
-         id: Mduel.Game.localPlayers.length,
+         id: Mduel.Game.localPlayers.length
       });
       Mduel.Game.localPlayers.push(player);
    }
