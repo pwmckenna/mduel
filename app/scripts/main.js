@@ -1,19 +1,22 @@
 require.config({
   shim: {
-	'components/underscore/underscore': {
-		exports: '_'
+	underscore: { 
+		exports: '_' 
 	},
-	'vendor/firebase': {
+	firebase: {
 		exports: 'Firebase'
 	}
   },
 
   paths: {
-    jquery: 'vendor/jquery.min'
+    jquery: 'vendor/jquery.min',
+    firebase: 'vendor/firebase',
+    underscore: 'components/underscore/underscore-min'
   }
 });
  
-require(['mduel/game'], function(Game) {
+require(['mduel/game', 'firebase', 'underscore'], function(Game, Firebase, _) {
+	console.log(typeof Firebase, typeof _);
 	var gameFirebase = new Firebase('https://mduel.firebaseio.com/game/');
 	Game.startGame(gameFirebase);
 });
