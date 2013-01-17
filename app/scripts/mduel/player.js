@@ -8,7 +8,11 @@ var memoize = function(func, hasher) {
 /**
  *
 **/
-var calculateBoundingBox = memoize(function(image, flip, x, y, width, height) {
+var calculateBoundingBox = memoize(function(image, frame) {
+   var x = frame.x;
+   var y = frame.y;
+   var width = frame.width;
+   var height = frame.height;
    var left = width, 
       top = height, 
       right = 0, 
@@ -31,22 +35,16 @@ var calculateBoundingBox = memoize(function(image, flip, x, y, width, height) {
          }
       }
    }
-   if(flip) {
-      return {
-         x: width - left - (right - left),
-         y: top,
-         width: right - left,
-         height: bottom - top
-      };         
-   } else {
-      return {
-         x: left,
-         y: top,
-         width: right - left,
-         height: bottom - top
-      };         
-   }
-}, function(image, flip, x, y, w, h) { return '' + image + flip + x + y + w + h; });
+   var ret = {
+      x: left,
+      y: top,
+      width: right - left,
+      height: bottom - top
+   };         
+   return ret;
+}, function(image, frame) { 
+   return '' + image + JSON.stringify(frame); 
+});
 
 var definePlayer = function(
    Images, 
@@ -94,8 +92,13 @@ var definePlayer = function(
          var image = this.get('spriteImage');
          var flip = this.get('flip');
          var frame = this.get('playerState').currentAnimation.getSprite();
-         var box = calculateBoundingBox(image, flip, frame.x, frame.y, frame.width, frame.height);
-         return { 
+         var box = calculateBoundingBox(image, frame);
+
+         if(flip) {
+            box.x = frame.width - box.x - box.width;
+         }
+
+         return {
             x: this.getPositionX() + box.x, 
             y: this.getPositionY() + box.y, 
             width: box.width, 
