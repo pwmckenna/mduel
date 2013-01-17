@@ -16,9 +16,17 @@
 # setState stand (undefined, #undefined)
 # setState stand (undefined, #undefined)
 # setState stand (undefined, #undefined)
+INDEX_SIZE_ERR: DOM Exception 1: Index or size was negative, or greater than the allowed value.
+
+  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
+  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
+  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
+  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
+  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
+  http://localhost:3501/scripts/e39e9c62.amd-app.js:1
 CACHE MANIFEST
 
-# Time: Thu Jan 17 2013 17:51:10 GMT+0000 (UTC)
+# Time: Thu Jan 17 2013 18:03:39 GMT+0000 (UTC)
 # This manifest was created by confess.js, http://github.com/jamesgpearce/confess
 #
 # Retrieved URL: http://localhost:3501/
@@ -51,7 +59,7 @@ images/c1473d39.marshmallowSprites.gif
 images/c1bb8d7c.playerSprite2.png
 images/d0469929.main_platform.bmp
 images/fe842aee.mallow.png
-scripts/833590bf.amd-app.js
+scripts/e39e9c62.amd-app.js
 scripts/vendor/5c47faec.seedrandom.js
 scripts/vendor/cf69c6f2.modernizr.min.js
 styles/9bb6d29e.main.css
