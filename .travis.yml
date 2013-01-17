@@ -12,10 +12,7 @@ env:
     # It must be encrypted using the travis gem
     # http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables
     - secure: "ZMqyhEGxTPx25aTCD5b0uMNs1rbbWfCy2GmHVuJZ7qph/gkA8N1qz0ko3E1a\ncA9gwMngbhlq/+YQrmvuvgPkEtYNZCuzPibUDATQdHcEZPSI4r4JRFdk9kTG\ncTCrubDQNXsdZ79NdcNsXyY45PiGDLTmnFQWucYgjuD6q2MlR20="
-    - GH_USER_NAME: pwmckenna
-    - GH_PROJECT_NAME: mduel
-    - GH_FULL_NAME: Patrick Williams
-    - GH_EMAIL: pwmckenna@gmail.com
+    - GH_USER_NAME=pwmckenna GH_PROJECT_NAME=mduel GH_FULL_NAME=Patrick Williams GH_EMAIL=pwmckenna@gmail.com
 
 before_script:
   # install dependencies
