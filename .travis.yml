@@ -7,11 +7,17 @@ branches:
     - master
 env:
   global:
-    # GH_TOKEN is the oauth token generated as described at 
+    # GH_OAUTH_TOKEN is the oauth token generated as described at 
     # https://help.github.com/articles/creating-an-oauth-token-for-command-line-use
+    #
+    # curl -u 'username' -d '{"scopes":["repo"],"note":"push to gh-pages from travis"}' https://api.github.com/authorizations
+    #
     # It must be encrypted using the travis gem
     # http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables
-    - secure: "ZMqyhEGxTPx25aTCD5b0uMNs1rbbWfCy2GmHVuJZ7qph/gkA8N1qz0ko3E1a\ncA9gwMngbhlq/+YQrmvuvgPkEtYNZCuzPibUDATQdHcEZPSI4r4JRFdk9kTG\ncTCrubDQNXsdZ79NdcNsXyY45PiGDLTmnFQWucYgjuD6q2MlR20="
+    #
+    # travis encrypt GH_OAUTH_TOKEN=b2797fff05e7461c4c8174fae08fb006cbadba9f
+    #
+    - secure: "PqA7vqn4A2OpI3Nj6RQYfDKINNBkoRVRsazkZfQPVqCgp6shJ65XXdp66eOT\nIpiVwms4aLAW1TWuMJbn5p3nBhqxkueKZtv8KIrB6Ho+MvRoC2P3S4sv7HJG\nDjA9K1+2H+neLn7kDdFIW42LtCPrAUgVoW0ixNH6gn8Ikf/CZig="
 
 before_script:
   # install dependencies
@@ -35,8 +41,8 @@ after_script:
 
   - git config --global user.email "${GH_EMAIL}"
   - git config --global user.name "${GH_FULL_NAME}"
-  # Any command that using GH_TOKEN must pipe the output to /dev/null to not expose your oauth token
-  - git submodule add -b gh-pages https://${GH_TOKEN}@github.com/${GH_USER_NAME}/${GH_PROJECT_NAME} site
+  # Any command that using GH_OAUTH_TOKEN must pipe the output to /dev/null to not expose your oauth token
+  - git submodule add -b gh-pages https://${GH_OAUTH_TOKEN}@github.com/${GH_USER_NAME}/${GH_PROJECT_NAME} site 2>&1
   - cd site
   - git checkout gh-pages
   - git rm -r .
@@ -44,5 +50,5 @@ after_script:
   - cp ../dist/.* .
   - git add -f .
   - git commit -am "adding the yeoman build files to gh-pages"
-  # Any command that using GH_TOKEN must pipe the output to /dev/null to not expose your oauth token
-  - git push https://${GH_TOKEN}@github.com/${GH_USER_NAME}/${GH_PROJECT_NAME} gh-pages > /dev/null 2>&1
+  # Any command that using GH_OAUTH_TOKEN must pipe the output to /dev/null to not expose your oauth token
+  - git push https://${GH_OAUTH_TOKEN}@github.com/${GH_USER_NAME}/${GH_PROJECT_NAME} gh-pages > /dev/null 2>&1
