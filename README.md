@@ -1,4 +1,4 @@
-#[Play the game!](pwmckenna.github.com/mduel)
+#[Play the game!](http://pwmckenna.github.com/mduel)
 
 
 #Dependencies
