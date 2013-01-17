@@ -12,50 +12,6 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
    Mduel.Util = Util;
    Mduel.Debug = Debug;
 
-   var memoize = function(func, hasher) {
-      var memo = {};
-      return function() {
-         var key = hasher.apply(this, arguments);
-         return hasOwnProperty.call(memo, key) ? memo[key] : (memo[key] = func.apply(this, arguments));
-      };
-   };
-
-   var calculateBoundingBox = memoize(function(image, frame) {
-      var x = frame.x;
-      var y = frame.y;
-      var width = frame.width;
-      var height = frame.height;
-      var left = width, 
-         top = height, 
-         right = 0, 
-         bottom = 0;
-
-      var canvas = document.createElement('canvas');
-      canvas.height = image.height;
-      canvas.width = image.width;
-      var ctx = canvas.getContext('2d');
-      ctx.drawImage(image, x, y, width, height, 0, 0, width, height);
-      var myImageData = ctx.getImageData(0, 0, image.width, image.height); // Parameters are left, top, width and height
-      for(var x = 0; x < myImageData.width; x++) {
-         for(var y = 0; y < myImageData.height; y++) {
-            var idx = (x + y * myImageData.width) * 4;
-            if(myImageData.data[idx + 3]) {
-               if(x < left) left = x;
-               if(y < top) top = y;
-               if(x > right) right = x;
-               if(y > bottom) bottom = y;
-            }
-         }
-      }
-      return {
-         x: left,
-         y: top,
-         width: right - left,
-         height: bottom - top
-      };         
-   }, function(image, frame) { return '' + image.src + JSON.stringify(frame); });
-
-
    Mduel.Pickups.Pickup = MovingObject.extend({
       initialize: function() {
          var bubble = Mduel.Animations.bubble();
@@ -67,7 +23,7 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
       getBoundingBox: function() {
          var image = Mduel.Images.pickups;
          var frame = this.get('bubble').getSprite();
-         var box = calculateBoundingBox(image, frame);
+         var box = Mduel.Util.calculateBoundingBox(image, false, frame);
          return { 
             x: this.getPositionX() + box.x, 
             y: this.getPositionY() + box.y, 
