@@ -34,7 +34,6 @@ var definePickups = function(Animations, Images, Util, MovingObject, _) {
       },
       
       update: function(elapsed) {
-         console.log(this.toJSON());
          // Update position
          var vx = this.getVelocityX();
          var vy = this.getVelocityY();
