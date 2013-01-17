@@ -9,6 +9,8 @@ var defineNodeImages = function() {
 
 	Mduel.Images.player1 = {};
 	Mduel.Images.player2 = {};
+	Mduel.Images.player3 = {};
+	Mduel.Images.player4 = {};
 	Mduel.Images.platform = {};
 	Mduel.Images.spawn = {};
 	Mduel.Images.powerup = {};
@@ -31,6 +33,8 @@ var defineBrowserImages = function() {
 
 	Mduel.Images.player1 = document.getElementById('playerSprite1');
 	Mduel.Images.player2 = document.getElementById('playerSprite2');
+	Mduel.Images.player3 = document.getElementById('playerSprite3');
+	Mduel.Images.player4 = document.getElementById('playerSprite4');
 	Mduel.Images.platform = document.getElementById('main_platform');
 	Mduel.Images.spawn = document.getElementById('spawn_platform');
 	Mduel.Images.powerup = document.getElementById('powerup_spawn');

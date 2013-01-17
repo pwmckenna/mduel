@@ -37,6 +37,8 @@ var defineGame = function(
       Mduel.Game.stage = Mduel.Stage.stage();
       Mduel.Game.addLocalPlayer();
       Mduel.Game.addLocalPlayer();
+      Mduel.Game.addLocalPlayer();
+      Mduel.Game.addLocalPlayer();
 
       window.onkeydown = Mduel.Keyboard.keyDown;
       window.onkeyup = Mduel.Keyboard.keyUp;
@@ -55,10 +57,18 @@ var defineGame = function(
    }
 
    Mduel.Game.addLocalPlayer = function(firebase) {
+      var images = [
+         Mduel.Images.player1,
+         Mduel.Images.player2,
+         Mduel.Images.player3,
+         Mduel.Images.player4
+      ]
       var position =  Mduel.Game.generateStartPosition()
       var player = new Mduel.Player.Player({
          x: position.x, 
-         y: position.y
+         y: position.y,
+         spriteImage: images[Mduel.Game.localPlayers.length],
+         id: Mduel.Game.localPlayers.length,
       });
       Mduel.Game.localPlayers.push(player);
    }
