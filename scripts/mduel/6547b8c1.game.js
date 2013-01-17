@@ -6,7 +6,8 @@ var defineGame = function(
    Keyboard,
    Util,
    Debug,
-   _
+   _,
+   Backbone
 ) {
    console.log('game loaded');
    if (typeof Mduel == 'undefined') {
@@ -31,13 +32,18 @@ var defineGame = function(
       
       Mduel.Game.state = 'game';
       
-      Mduel.Game.localPlayers = [];
       Mduel.Game.pickups = new Mduel.Pickups.Pickups();
       Mduel.Game.stage = Mduel.Stage.stage();
-      Mduel.Game.addLocalPlayer();
-      Mduel.Game.addLocalPlayer();
-      Mduel.Game.addLocalPlayer();
-      Mduel.Game.addLocalPlayer();
+      Mduel.Game.localPlayers = new Backbone.Collection([
+         Mduel.Game.generateLocalPlayer(0),
+         Mduel.Game.generateLocalPlayer(1)
+      ]);
+      if(Mduel.Game.localPlayers.on('remove', function() {
+         if(Mduel.Game.localPlayers.length <= 1) {
+            Mduel.Game.localPlayers.at(0).celebrateVictory();
+         }
+      }));
+
 
       window.onkeydown = Mduel.Keyboard.keyDown;
       window.onkeyup = Mduel.Keyboard.keyUp;
@@ -55,21 +61,24 @@ var defineGame = function(
       };
    }
 
-   Mduel.Game.addLocalPlayer = function() {
-      var images = [
-         Mduel.Images.player1,
-         Mduel.Images.player2,
-         Mduel.Images.playerRemote,
-         Mduel.Images.playerComputer
-      ]
-      var position =  Mduel.Game.generateStartPosition()
+   Mduel.Game.generateLocalPlayer = function(id) {
+      var images = {
+         0: Mduel.Images.player1,
+         1: Mduel.Images.player2,
+         2: Mduel.Images.playerRemote,
+         3: Mduel.Images.playerComputer
+      };
+      if(!images.hasOwnProperty(id)) {
+         throw 'invalid player id';
+      }
+      var position = Mduel.Game.generateStartPosition()
       var player = new Mduel.Player.Player({
          x: position.x, 
          y: position.y,
-         spriteImage: images[Mduel.Game.localPlayers.length],
-         id: Mduel.Game.localPlayers.length
+         spriteImage: images[id],
+         id: id
       });
-      Mduel.Game.localPlayers.push(player);
+      return player;
    }
 
    Mduel.Game.gameLoop = function() {
@@ -86,9 +95,9 @@ var defineGame = function(
    Mduel.Game.update = function(elapsedTime) {
       Mduel.Game.stage.update(elapsedTime);
       Mduel.Game.pickups.update(elapsedTime);
-      for (var i = 0, len = Mduel.Game.localPlayers.length; i < len; i++) {
-         Mduel.Game.localPlayers[i].update(elapsedTime);
-      }
+      Mduel.Game.localPlayers.each(function(player) {
+         player.update(elapsedTime);
+      });
    }
 
    Mduel.Game.draw = function(elapsedTime) {
@@ -99,10 +108,9 @@ var defineGame = function(
 
       if (Mduel.Game.state == 'game') {
          Mduel.Game.stage.draw(ctx, elapsedTime, canvas.width, canvas.height);
-         for (var i = 0, len = Mduel.Game.localPlayers.length; i < len; i++) {
-            var player = Mduel.Game.localPlayers[i];
+         Mduel.Game.localPlayers.each(function(player) {
             player.draw(ctx, elapsedTime);
-         }
+         })
          Mduel.Game.pickups.draw(ctx, elapsedTime);
       }
       
@@ -113,12 +121,8 @@ var defineGame = function(
       }
    }
 
-   Mduel.Game.handlePickupCollisions = function(elapsedTime, player) {
-      Mduel.Game.pickups.each(function(pickup) {
-         if(Mduel.Util.colliding(pickup.getBoundingBox(), player.getBoundingBox())) {
-            Mduel.Game.pickups.remove(pickup);
-         }
-      });
+   Mduel.Game.handlePickupCollisions = function(elapsedTime, players) {
+      Mduel.Game.pickups.handleCollisions(elapsedTime, players, Mduel.Game.stage);
    }
 
    Mduel.Game.handleWallCollisions = function(elapsedTime, player) {
@@ -159,13 +163,13 @@ var defineGame = function(
    }
 
    Mduel.Game.handleCollisions = function(elapsedTime) {
+      Mduel.Game.handlePickupCollisions(elapsedTime, Mduel.Game.localPlayers);
       for (var i = 0; i < Mduel.Game.localPlayers.length; i++) {
-         var player = Mduel.Game.localPlayers[i];
+         var player = Mduel.Game.localPlayers.at(i);
          Mduel.Game.handleWallCollisions(elapsedTime, player);
-         Mduel.Game.handlePickupCollisions(elapsedTime, player);
 
          for (var j = i + 1; j < Mduel.Game.localPlayers.length; j++) {
-            var other = Mduel.Game.localPlayers[j];
+            var other = Mduel.Game.localPlayers.at(j);
             Mduel.Game.handlePlayerCollisions(elapsedTime, player, other)
          }
       }
@@ -183,7 +187,8 @@ if(typeof define !== 'undefined') {
       'mduel/keyboard',
       'mduel/util',
       'mduel/debug',
-      'underscore'
+      'underscore',
+      'backbone'
    ], defineGame);
 } else if(typeof module !== 'undefined') {
    module.exports = defineGame(
@@ -194,6 +199,7 @@ if(typeof define !== 'undefined') {
       require('./keyboard'),
       require('./util'),
       require('./debug'),
-      require('underscore')
+      require('underscore'),
+      require('backbone')
    );
 }

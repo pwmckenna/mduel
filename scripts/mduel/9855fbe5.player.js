@@ -24,7 +24,6 @@ var definePlayer = function(
 
    Mduel.Player.Player = Mduel.MovingObject.extend({
       defaults: _.extend({
-         location: 'platform',
          flip: false,
          state: 'stand',
          spriteImage: Mduel.Images.player1,
@@ -53,6 +52,16 @@ var definePlayer = function(
             width: box.width, 
             height: box.height 
          };
+      },
+
+      celebrateVictory: function() {
+         if(this.isOnPlatform()) {
+            this.setVelocity(0, 0);
+            this.get('playerState').setState('standVictory');
+         } else if(this.isOnRope()) {
+            this.setVelocity(0, 0);
+            this.get('playerState').setState('ropeVictory');
+         }
       },
 
       draw: function(ctx, elapsed) {
@@ -106,9 +115,6 @@ var definePlayer = function(
             this.changePositionY(vy);
          }
 
-         // Update location
-         this.updateLocation();
-         
          this.get('playerState').update(elapsed);
       },
          
@@ -124,20 +130,6 @@ var definePlayer = function(
          }
       },
      
-      updateLocation: function() {
-         // Possible Values: air, pit, platform, rope
-         if (this.location == 'platform') 
-         {         
-            if (this.isOnPlatform())
-            {
-            }
-            else
-            {
-               this.location = 'air';
-            }         
-         }
-      },
-      
       isOnPlatform: function() {
          Mduel.Game = require('mduel/game');
          var rval = undefined;

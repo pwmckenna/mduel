@@ -4,7 +4,6 @@ var defineStage = function(
    Util,
    SeedRandom
 ) {
-   SeedRandom.seedrandom('the dark lords');
    var random = SeedRandom.random;
 
    console.log('stage loaded');
