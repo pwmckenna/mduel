@@ -15,11 +15,7 @@ var defineMovingObject = function(
 			x: 0,
 			y: 0,
 			vx: 0,
-			vy: 0,
-			bx: 0,
-			by: 0,
-			bw: 0,
-			bh: 0
+			vy: 0
 		},
 		initialize: function() {      
 		},
