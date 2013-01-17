@@ -24,8 +24,7 @@ var definePlayer = function(
       that.firebase = spec.firebase;
       
       that.playerState = Mduel.PlayerState.playerState({ 
-         player: that, 
-         ref: that.firebase
+         player: that
       });
       
       that.id = spec.id;

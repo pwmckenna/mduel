@@ -347,7 +347,7 @@ var definePlayerState = function(
          }
       };
       
-      spec.ref.child('state').on('value', function(dataSnapshot) {
+      that.player.firebase.child('state').on('value', function(dataSnapshot) {
          var state = dataSnapshot.val();
          if (that.states[state]) {
             that.currentState = that.states[state];
