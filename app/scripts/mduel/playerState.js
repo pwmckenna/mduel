@@ -19,6 +19,12 @@ var definePlayerState = function(
       that.player = spec.player;
 
       that.states = {
+         standVictory: {
+            animation: 'standVictory'
+         },
+         ropeVictory: {
+            animation: 'ropeVictory'
+         },
          stand : {
             animation: 'stand',
             keyUp : function(keyState) {
@@ -338,6 +344,16 @@ var definePlayerState = function(
             update : function(elapsed) {
                if (that.currentAnimation.isFinished()) {
                   that.setState('dead');
+                  that.player.collection.remove(that.player);
+               }
+            }
+         },
+         vaporize : {
+            animation: 'vaporize',
+            update : function(elapsed) {
+               if(that.currentAnimation.isFinished()) {
+                  that.setState('dead');
+                  that.player.collection.remove(that.player);
                }
             }
          },

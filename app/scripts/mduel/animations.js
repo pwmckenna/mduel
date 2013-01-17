@@ -124,6 +124,38 @@ var defineAnimations = function(Sprites, Animation) {
       });
    }
 
+   Mduel.Animations.vaporize = function() {
+      return Mduel.Animation.animation({
+         frames: [
+            { sprite: 'vaporize_1', time: 75 },
+            { sprite: 'vaporize_2', time: 75 },
+            { sprite: 'vaporize_3', time: 75 },
+            { sprite: 'vaporize_4', time: 75 }
+         ],
+         data: Mduel.Sprites.player
+      });
+   }
+
+   Mduel.Animations.standVictory = function() {
+      return Mduel.Animation.animation({
+         frames: [
+            { sprite: 'stand_victory_1', time: 75 },
+            { sprite: 'stand_victory_2', time: 75 }
+         ],
+         data: Mduel.Sprites.player
+      })
+   }
+
+   Mduel.Animations.ropeVictory = function() {
+      return Mduel.Animation.animation({
+         frames: [
+            { sprite: 'rope_victory_1', time: 75 },
+            { sprite: 'rope_victory_2', time: 75 }
+         ],
+         data: Mduel.Sprites.player
+      })
+   }
+
    Mduel.Animations.stand = function() {
 
       return Mduel.Animation.animation({
