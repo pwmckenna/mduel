@@ -125,6 +125,24 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
             }, this);
             break;
             case 'explode':
+            var platformBox = function(platform) {
+               return {
+                  x: platform.x,
+                  y: platform.y,
+                  width: 28,
+                  height: 16
+               };
+            }
+            for (var i = 0, len = stage.platforms.length; i < len; i++) {
+               var box = platformBox(stage.platforms[i]);
+               if(Mduel.Util.colliding(this.getBoundingBox(), box)) {
+                  stage.platforms.splice(i, 1);
+                  this.collection.remove(this);
+                  break;
+               }
+               //console.log(platform);
+            }
+
             //do something with the stage
             break;
          }
