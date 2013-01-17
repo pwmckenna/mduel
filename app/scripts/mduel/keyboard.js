@@ -12,7 +12,7 @@ var defineKeyboard = function() {
       var keyName = Mduel.Keyboard.getKeyName(e.keyCode);
       if (keyName) {
       
-         if (Mduel.Game.state == 'game') {   
+         if (Mduel.Game.state == 'game') { 
             for (var i = 0, len = Mduel.Keyboard.playerKeys.length; i < len; i++) {
                if (Mduel.Keyboard.playerKeys[i][keyName]) {
                   var mapping = Mduel.Keyboard.playerKeys[i][keyName];
@@ -25,9 +25,11 @@ var defineKeyboard = function() {
                   Mduel.Keyboard.playerKeyStates[i].lastKey.pressed = true;
                   Mduel.Keyboard.playerKeyStates[i].lastKey.eventTime = eventTime;
                   
-                  if (Mduel.Game.localPlayers.length > i && Mduel.Game.localPlayers[i].keyDown) {
-                     Mduel.Game.localPlayers[i].keyDown(Mduel.Keyboard.playerKeyStates[i]);
-                  }               
+                  Mduel.Game.localPlayers.each(function(player) {
+                     if(player.get('id') === i) {
+                        player.keyDown(Mduel.Keyboard.playerKeyStates[i]);
+                     }
+                  });
                }
             }
          }
@@ -52,9 +54,11 @@ var defineKeyboard = function() {
                   Mduel.Keyboard.playerKeyStates[i].lastKey.pressed = false;
                   Mduel.Keyboard.playerKeyStates[i].lastKey.eventTime = eventTime;
                   
-                  if (Mduel.Game.localPlayers.length > i && Mduel.Game.localPlayers[i].keyUp) {
-                     Mduel.Game.localPlayers[i].keyUp(Mduel.Keyboard.playerKeyStates[i]);
-                  }
+                  Mduel.Game.localPlayers.each(function(player) {
+                     if(player.get('id') === i) {
+                        player.keyUp(Mduel.Keyboard.playerKeyStates[i]);
+                     }
+                  });               
                }
             }
          }
