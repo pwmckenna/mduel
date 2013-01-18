@@ -25,7 +25,7 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
       initialize: function() {
          var bubble = Mduel.Animations.bubble();
          var type = Mduel.Pickups.Types[Math.floor(Math.random() * Mduel.Pickups.Types.length)];
-         this.set('type', type);
+         this.set('type', 'explode');
          var image = Mduel.Animations[this.get('type')]();
          this.set('bubble', bubble);
          this.set('image', image);
@@ -125,7 +125,7 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
             }, this);
             break;
             case 'explode':
-            var platformBox = function(platform) {
+            var getPlatformBox = function(platform) {
                return {
                   x: platform.x,
                   y: platform.y,
@@ -136,8 +136,9 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
             var box = this.getBoundingBox();
             var collided = false;
             for (var i = stage.platforms.length - 1; i >= 0; --i) {
-               var platform = platformBox(stage.platforms[i]);
-               if(Mduel.Util.colliding(box, platform)) {
+               var platform = stage.platforms[i];
+               var platformBox = getPlatformBox(platform);
+               if(Mduel.Util.colliding(box, platformBox)) {
                   collided = true;
                }
             }
@@ -145,12 +146,18 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
                box.x -= box.width;
                box.width *= 3;
                for (var i = stage.platforms.length - 1; i >= 0; --i) {
-                  var platform = platformBox(stage.platforms[i]);
-                  if(Mduel.Util.colliding(box, platform)) {
+                  var platform = stage.platforms[i];
+                  var platformBox = getPlatformBox(platform);
+                  if(Mduel.Util.colliding(box, platformBox)) {
+                     var affectedPlayers = players.filter(function(player) { 
+                        return _.isEqual(player.isOnPlatform(), platform);
+                     });
                      stage.platforms.splice(i, 1);
+                     _.each(affectedPlayers, function(player) {
+                        player.get('playerState').setState('runJump');
+                     });
                   }
                }
-
 
                this.collection.remove(this);
             }
