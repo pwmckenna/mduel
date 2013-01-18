@@ -133,14 +133,26 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
                   height: 16
                };
             }
-            for (var i = 0, len = stage.platforms.length; i < len; i++) {
-               var box = platformBox(stage.platforms[i]);
-               if(Mduel.Util.colliding(this.getBoundingBox(), box)) {
-                  stage.platforms.splice(i, 1);
-                  this.collection.remove(this);
-                  break;
+            var box = this.getBoundingBox();
+            var collided = false;
+            for (var i = stage.platforms.length - 1; i >= 0; --i) {
+               var platform = platformBox(stage.platforms[i]);
+               if(Mduel.Util.colliding(box, platform)) {
+                  collided = true;
                }
-               //console.log(platform);
+            }
+            if(collided) {
+               box.x -= box.width;
+               box.width *= 3;
+               for (var i = stage.platforms.length - 1; i >= 0; --i) {
+                  var platform = platformBox(stage.platforms[i]);
+                  if(Mduel.Util.colliding(box, platform)) {
+                     stage.platforms.splice(i, 1);
+                  }
+               }
+
+
+               this.collection.remove(this);
             }
 
             //do something with the stage
