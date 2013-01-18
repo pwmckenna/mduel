@@ -15,8 +15,8 @@ require.config({
   paths: {
     jquery: 'vendor/jquery.min',
     firebase: 'vendor/firebase',
-    underscore: 'components/underscore/underscore-min',
-    backbone: 'components/backbone/backbone-min'
+    underscore: 'components/underscore/underscore',
+    backbone: 'components/backbone/backbone'
   }
 });
  

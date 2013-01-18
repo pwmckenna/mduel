@@ -25,7 +25,7 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
       initialize: function() {
          var bubble = Mduel.Animations.bubble();
          var type = Mduel.Pickups.Types[Math.floor(Math.random() * Mduel.Pickups.Types.length)];
-         this.set('type', 'explode');
+         this.set('type', type);
          var image = Mduel.Animations[this.get('type')]();
          this.set('bubble', bubble);
          this.set('image', image);
