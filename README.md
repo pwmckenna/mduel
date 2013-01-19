@@ -5,7 +5,7 @@ Mashmallow duel was a game that I played as a kid with my friends across the str
 
 The game was originally written by Duncan Gill in 1996.  
 This project is derived from https://github.com/dgritsko/mduel_js.  
-[Fan page.](http://mduel2k5.spadgos.com/mduel96/index.php)  
+[Mduel fan page.](http://mduel2k5.spadgos.com/mduel96/index.php)  
 
 #Dependencies
 * [Yeoman](http://yeoman.io) Needed for testing, building, etc
