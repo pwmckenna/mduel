@@ -32,4 +32,5 @@ All commits to the master branch trigger a ```yeoman test build``` on [travis-ci
 Pushes of the server are still being worked out. Currently hosted on ec2, but it would awesome to use something that travis-ci could deploy to.
 
 #License
-Unless one of the projects that I extended has a license that overrides it, this project is released under the MIT license.
+[GNU General Public License.](http://www.gnu.org/copyleft/gpl.html)
+
