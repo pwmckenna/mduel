@@ -1,5 +1,11 @@
 #[Play the game!](http://pwmckenna.github.com/mduel)
 
+#Background
+Mashmallow duel was a game that I played as a kid with my friends across the street, and now I'm too far away to play them on the same keyboard, so I'm going to make a MMO version of the game so I can play them.
+
+The game was originally written by Duncan Gill in 1996.  
+This project is derived from https://github.com/dgritsko/mduel_js.  
+[Fan page.](http://mduel2k5.spadgos.com/mduel96/index.php)  
 
 #Dependencies
 * [Yeoman](http://yeoman.io) Needed for testing, building, etc
@@ -24,3 +30,6 @@ All commits to the master branch trigger a ```yeoman test build``` on [travis-ci
 [![Build Status](https://travis-ci.org/pwmckenna/mduel.png?branch=master)](undefined)
 
 Pushes of the server are still being worked out. Currently hosted on ec2, but it would awesome to use something that travis-ci could deploy to.
+
+#License
+Unless one of the projects that I extended has a license that overrides it, this project is released under the MIT license.
