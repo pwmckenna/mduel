@@ -26,8 +26,6 @@ var defineGame = function(
    Mduel.Debug = Debug;
 
    Mduel.Game.startGame = function() {
-      Mduel.Game.framerate = 30;
-      
       Mduel.Game.lastFrameDrawn = new Date().valueOf();
       
       Mduel.Game.state = 'game';
@@ -49,8 +47,7 @@ var defineGame = function(
 
       window.onkeydown = Mduel.Keyboard.keyDown;
       window.onkeyup = Mduel.Keyboard.keyUp;
-
-      setInterval(Mduel.Game.gameLoop, 1000 / Mduel.Game.framerate);
+      Mduel.Game.requestGameLoop();
    }
 
    Mduel.Game.generateStartPosition = function() {
@@ -83,14 +80,21 @@ var defineGame = function(
       return player;
    }
 
-   Mduel.Game.gameLoop = function() {
-      var renderTime = new Date().valueOf();
+   Mduel.Game.requestGameLoop = function() {
+      requestAnimationFrame(Mduel.Game.gameLoop);
+   }
+
+
+   Mduel.Game.gameLoop = function(renderTime) {
+      //
       var elapsedTime = renderTime - Mduel.Game.lastFrameDrawn;
       Mduel.Game.lastFrameDrawn = renderTime;
 
       Mduel.Game.handleCollisions(elapsedTime);
       Mduel.Game.update(elapsedTime);
       Mduel.Game.draw(elapsedTime);
+
+      Mduel.Game.requestGameLoop();
    }
 
 

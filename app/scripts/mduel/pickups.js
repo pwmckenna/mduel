@@ -1,4 +1,4 @@
-var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
+var definePickups = function(Animations, Images, Util, MovingObject, Debug, Constants, _) {
    console.log('pickups loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
@@ -11,6 +11,7 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
    Mduel.Images = Images;
    Mduel.Util = Util;
    Mduel.Debug = Debug;
+   Mduel.Constants = Constants;
 
    Mduel.Pickups.Types = [
       'skull',
@@ -58,14 +59,15 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, _) {
       },
       
       update: function(elapsed) {
+         var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
          // Update position
          var vx = this.getVelocityX();
          var vy = this.getVelocityY();
          if(vx !== 0) {
-            this.changePositionX(vx);
+            this.changePositionX(vx * updatePercentage);
          }
          if(vy !== 0) {
-            this.changePositionY(vy);
+            this.changePositionY(vy * updatePercentage);
          }
          if(this.getPositionX() < 0) {
             this.setVelocityX(Math.abs(this.getVelocityX()));
@@ -220,6 +222,7 @@ if(typeof define !== 'undefined') {
       'mduel/util',
       'mduel/movingObject',
       'mduel/debug',
+      'mduel/constants',
       'underscore'
    ], definePickups);
 } else if(typeof module !== 'undefined') {
@@ -229,6 +232,7 @@ if(typeof define !== 'undefined') {
       require('../mduel/util'),
       require('../mduel/movingObject'),
       require('../mduel/debug'),
+      require('../mduel/constants'),
       require('underscore')
    );   
 }

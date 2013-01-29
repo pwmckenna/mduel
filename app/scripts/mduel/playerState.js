@@ -1,6 +1,7 @@
 var definePlayerState = function(
    Animations,
-   Keyboard
+   Keyboard,
+   Constants
 ) {
    console.log('playerState loaded');
    if (typeof Mduel == 'undefined') {
@@ -12,6 +13,7 @@ var definePlayerState = function(
 
    Mduel.Animations = Animations;
    Mduel.Keyboard = Keyboard;
+   Mduel.Constants = Constants;
 
    Mduel.PlayerState.playerState = function(spec) {
       var that = {};
@@ -112,7 +114,8 @@ var definePlayerState = function(
             animation : 'standJump',
             update : function(elapsed) {
                if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
-                  that.player.changeVelocityY(1);
+                  var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
+                  that.player.changeVelocityY(1 * updatePercentage);
                }
 
                if (that.player.getVelocityY() >= 0) {
@@ -131,7 +134,8 @@ var definePlayerState = function(
             animation : 'runJump',
             update : function(elapsed) {
                if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
-                  that.player.changeVelocityY(1);
+                  var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
+                  that.player.changeVelocityY(1 * updatePercentage);
                }
 
                if (that.player.getVelocityY() >= 0) {
@@ -295,7 +299,8 @@ var definePlayerState = function(
             animation : 'stand',
             update : function(elapsed) {
                if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
-                  that.player.changeVelocityY(1);
+                  var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
+                  that.player.changeVelocityY(1 * updatePercentage);
                }
                
                if (that.player.getPositionY() >= 320) {
@@ -316,7 +321,8 @@ var definePlayerState = function(
             animation : 'standFall',
             update : function(elapsed) {         
                if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
-                  that.player.changeVelocityY(1);
+                  var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
+                  that.player.changeVelocityY(1 * updatePercentage);
                }
                
                if (that.player.getPositionY() >= 320) {
@@ -386,11 +392,13 @@ var definePlayerState = function(
 if(typeof define !== 'undefined') {
    define([
       'mduel/animations',
-      'mduel/keyboard'
+      'mduel/keyboard',
+      'mduel/constants'
    ], definePlayerState);   
 } else if(typeof module !== 'undefined.') {
    module.exports = definePlayerState(
       require('./animations'), 
-      require('./keyboard')
+      require('./keyboard'),
+      require('./constants')
    );
 }

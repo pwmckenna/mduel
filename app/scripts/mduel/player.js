@@ -5,6 +5,7 @@ var definePlayer = function(
    Util,
    MovingObject,
    Debug,
+   Constants,
    _
 ) {
    console.log('player loaded');
@@ -21,6 +22,7 @@ var definePlayer = function(
    Mduel.Util = Util;
    Mduel.MovingObject = MovingObject;
    Mduel.Debug = Debug;
+   Mduel.Constants = Constants;
 
    Mduel.Player.Player = Mduel.MovingObject.extend({
       defaults: _.extend({
@@ -106,13 +108,14 @@ var definePlayer = function(
       
       update: function(elapsed) {
          // Update position
+         var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
          var vx = this.getVelocityX();
          var vy = this.getVelocityY();
          if(vx !== 0) {
-            this.changePositionX(vx);
+            this.changePositionX(vx * updatePercentage);
          }
          if(vy !== 0) {
-            this.changePositionY(vy);
+            this.changePositionY(vy * updatePercentage);
          }
 
          this.get('playerState').update(elapsed);
@@ -195,6 +198,7 @@ if(typeof define !== 'undefined') {
       'mduel/util',
       'mduel/movingObject',
       'mduel/debug',
+      'mduel/constants',
       'underscore'
    ], definePlayer);
 } else if(typeof module !== 'undefined.') {
@@ -205,6 +209,7 @@ if(typeof define !== 'undefined') {
       require('./util'),
       require('./movingObject'),
       require('./debug'),
+      require('./constants'),
       require('underscore')
    );
 }
