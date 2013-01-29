@@ -111,6 +111,8 @@ var defineGame = function(
       var ctx = canvas.getContext('2d');
       
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       if (Mduel.Game.state == 'game') {
          Mduel.Game.stage.draw(ctx, elapsedTime, canvas.width, canvas.height);

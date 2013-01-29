@@ -101,7 +101,7 @@ var definePlayer = function(
          if(Mduel.Debug.debug) {
             var box = this.getBoundingBox();
             //draw the bounding box so we can work on collision detection
-            ctx.strokeStyle = "white";
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
             ctx.strokeRect(box.x, box.y, box.width, box.height);
          }
       },
