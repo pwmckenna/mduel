@@ -368,8 +368,13 @@ var definePlayerState = function(
          }
       };
 
+      that.getState = function() {
+         return that.state;
+      }
+
       that.setState = function(state) {
          console.log('setState', state);
+         that.state = state;
          if (that.states[state]) {
             that.currentState = that.states[state];
             that.currentAnimation = Mduel.Animations[that.currentState.animation]();

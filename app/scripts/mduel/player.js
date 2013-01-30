@@ -179,6 +179,21 @@ var definePlayer = function(
          
          return rval;
       },
+      isStanding: function() {
+         return this.get('playerState').getState() == 'stand';
+      },
+      isRunning: function() {
+         return this.get('playerState').getState() == 'run';
+      },
+      isRolling: function() {
+         return this.get('playerState').getState() == 'roll';
+      },
+      isCrouching: function() {
+         return this.get('playerState').getState() == 'crouch';
+      },
+      isUncrouching: function() {
+         return this.get('playerState').getState() == 'uncrouching';
+      },
       getFlip: function() {
          return this.get('flip');
       },

@@ -102,10 +102,6 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, Cons
          player.set('pickup', this.get('type'));
       },
 
-      destroyPlatform: function(platform) {
-
-      },
-
       handleCollisions: function(elapsedTime, players, stage) {
          switch(this.get('type')) {
             case 'skull':
@@ -153,7 +149,13 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, Cons
                   var platformBox = getPlatformBox(platform);
                   if(Mduel.Util.colliding(box, platformBox)) {
                      var affectedPlayers = players.filter(function(player) { 
-                        return _.isEqual(player.isOnPlatform(), platform);
+                        return _.isEqual(player.isOnPlatform(), platform) && (
+                           player.isStanding() 
+                           || player.isRunning()
+                           || player.isCrouching()
+                           || player.isUncrouching()
+                           || player.isRolling()
+                        );
                      });
                      stage.platforms.splice(i, 1);
                      _.each(affectedPlayers, function(player) {
