@@ -105,10 +105,13 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, Cons
       handleCollisions: function(elapsedTime, players, stage) {
          switch(this.get('type')) {
             case 'skull':
-            players.each(function(player) {
+            players.any(function(player) {
                if(Mduel.Util.colliding(this.getBoundingBox(), player.getBoundingBox())) {
                   this.killPlayer(player);
                   this.collection.remove(this);
+                  return true;
+               } else {
+                  return false;
                }
             }, this);
             break;
