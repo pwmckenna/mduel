@@ -28,6 +28,54 @@ var definePlayerState = function(
       that.states.ropeVictory = {
          animation: 'ropeVictory'
       };
+      that.knock = function () {
+         var forward = (!that.player.get('flip') && that.player.getVelocityX() > 0) ||
+            (that.player.get('flip') && that.player.getVelocityX() < 0);
+         that.setState(forward ? 'knockForwardHard' : 'knockBackHard');         
+      };
+      that.introduceVelocityIfNecessary = function(x, vx) {
+         if(vx === 0 && that.player.getVelocityX() === 0) {
+            // we need to introduce some velocity to split these two apart
+            that.player.setVelocityX(
+               that.player.getPositionX() < x ? -0.5 : 0.5
+            );
+         }         
+      };
+      that.updateFall = function(elapsed) {
+         if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
+            var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
+            that.player.changeVelocityY(1 * updatePercentage);
+         }
+
+         if (that.player.getVelocityY() >= 0) {
+            var platform = that.player.isOnPlatform();
+
+            if (that.player.getPositionY() >= 320) {
+               that.player.setVelocity(0, 0);
+               that.player.setPositionY(320);
+               that.setState('disintegrate');
+            } else if (platform) {
+               that.player.setVelocityY(0);
+               
+               that.player.setPositionY(platform.y - 56);
+            
+               var keyState = Mduel.Keyboard.playerKeyStates[that.player.id];
+               if (!keyState.right.pressed && !keyState.left.pressed) {
+                  that.player.setVelocityX(0);
+                  that.setState('stand');
+               }
+               else {
+                  if ((keyState.right.pressed && !keyState.left.pressed && that.player.getVelocityX() < 0) ||
+                      (keyState.left.pressed && !keyState.right.pressed && that.player.getVelocityX() > 0)) {
+                     that.player.setFlip(!that.player.getFlip());
+                     that.player.setVelocityX(-1 * that.player.getVelocityX());
+                  }
+               
+                  that.setState('run');
+               }
+            }
+         }
+      };
       that.states.stand = {
          animation: 'stand',
          collide: function(state, x, y, vx, vy) {
@@ -36,9 +84,7 @@ var definePlayerState = function(
                case 'run':
                case 'runJump':
                   that.player.setVelocityX(vx);
-                  var forward = (!that.player.get('flip') && that.player.getVelocityX() > 0) ||
-                     (that.player.get('flip') && that.player.getVelocityX() < 0);
-                  that.setState(forward ? 'knockForwardHard' : 'knockBackHard');
+                  that.knock();
                break;
                case 'roll':
                   that.player.setVelocityY(-10);
@@ -48,7 +94,10 @@ var definePlayerState = function(
                   that.player.setVelocityY(-10);
                   that.setState('standJump');
                break;
-               case 'disintegrate':
+               case 'fall':
+               case 'stand':
+                  that.introduceVelocityIfNecessary(x, vx);
+                  that.knock();
                break;
                default:
                   throw 'stand/' + state + ' not supported';
@@ -113,21 +162,15 @@ var definePlayerState = function(
          collide: function(state, x, y, vx, vy) {
             console.log('run collide', state, x, y, vx, vy);
             switch(state) {
+               case 'standJump':
+               case 'runJump':
                case 'run':
                   that.player.setVelocityX(vx);
-                  that.player.setVelocityY(vy);
-                  that.setState('knockBackHard');
+                  that.knock();
                   break;
                case 'stand':
                   that.player.setVelocityX(0);
-                  that.setState('knockForward');
-               break;
-               case 'standJump':
-               case 'runJump':
-                  that.player.changeVelocityX(vx);
-                  var forward = (!that.player.get('flip') && that.player.getVelocityX() > 0) ||
-                     (that.player.get('flip') && that.player.getVelocityX() < 0);
-                  that.setState(forward ? 'knockForwardHard' : 'knockBackHard');
+                  that.knock();
                break;
                default:
                   throw 'run/' + state + ' not supported';
@@ -167,23 +210,7 @@ var definePlayerState = function(
       };
       that.states.standJump = {
          animation : 'standJump',
-         update : function(elapsed) {
-            if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
-               var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
-               that.player.changeVelocityY(1 * updatePercentage);
-            }
-
-            if (that.player.getVelocityY() >= 0) {
-               var platform = that.player.isOnPlatform();
-               
-               if (platform) {            
-                  that.player.setPositionY(platform.y - 56);
-               
-                  that.player.setVelocityY(0);
-                  that.setState('stand');
-               }
-            }
-         },
+         update : that.updateFall,
          collide: function(state, x, y, vx, vy) {
             console.log('standJump collide', state, x, y, vx, vy);
             switch(state) {
@@ -191,7 +218,11 @@ var definePlayerState = function(
                case 'crouch':
                case 'stand':
                case 'standJump':
+               break;
                case 'run':
+               case 'runJump':
+               that.player.setVelocityX(vx);
+               that.knock();
                break;
                default:
                   throw 'standJump/' + state + ' not supported';
@@ -201,48 +232,22 @@ var definePlayerState = function(
       };
       that.states.runJump = {
          animation : 'runJump',
-         update : function(elapsed) {
-            if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
-               var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
-               that.player.changeVelocityY(1 * updatePercentage);
-            }
-
-            if (that.player.getVelocityY() >= 0) {
-               var platform = that.player.isOnPlatform();
-
-               if (that.player.getPositionY() >= 320) {
-                  that.player.setVelocity(0, 0);
-                  that.player.setPositionY(320);
-                  that.setState('disintegrate');
-               } else if (platform) {
-                  that.player.setVelocityY(0);
-                  
-                  that.player.setPositionY(platform.y - 56);
-               
-                  var keyState = Mduel.Keyboard.playerKeyStates[that.player.id];
-                  if (!keyState.right.pressed && !keyState.left.pressed) {
-                     that.player.setVelocityX(0);
-                     that.setState('stand');
-                  }
-                  else {
-                     if ((keyState.right.pressed && !keyState.left.pressed && that.player.getVelocityX() < 0) ||
-                         (keyState.left.pressed && !keyState.right.pressed && that.player.getVelocityX() > 0)) {
-                        that.player.setFlip(!that.player.getFlip());
-                        that.player.setVelocityX(-1 * that.player.getVelocityX());
-                     }
-                  
-                     that.setState('run');
-                  }
-               }
-            }
-         },
+         update : that.updateFall,
          collide: function(state, x, y, vx, vy) {
             console.log('runJump collide', state, x, y, vx, vy);
             switch(state) {
                case 'stand':
-                  that.setState('knockBack');
+               case 'standJump':
+               case 'run':
+               case 'runJump':
+               case 'crouch':
+               case 'uncrouching':
                   that.player.setVelocityX(-1 * that.player.getVelocityX());
-                  that.player.setVelocityY(0);
+                  that.knock();
+               break;
+               case 'climbing':
+               case 'rope':
+               case 'fall':
                break;
                default:
                   throw 'runJump/' + state + ' not supported';
@@ -289,6 +294,10 @@ var definePlayerState = function(
                   that.player.setVelocityY(-10);
                   that.setState('standJump');
                break;
+               case 'runJump':
+                  that.player.setVelocityX(-1 * that.player.getVelocityX());
+                  that.knock();
+                  break;
                default:
                   throw 'crouch/' + state + ' not supported';
                break;
@@ -345,6 +354,7 @@ var definePlayerState = function(
                   that.setState('run');
                }
                else {
+                  that.player.setVelocityX(0);
                   that.setState('stand');
                }
             }
@@ -408,6 +418,11 @@ var definePlayerState = function(
          collide: function(state, x, y, vx, vy) {
             console.log('uncrouching collide', state, x, y, vx, vy);
             switch(state) {
+               case 'standJump':
+                  that.introduceVelocityIfNecessary(x, vx);
+                  that.player.setVelocityX(vx);
+                  that.knock();
+               break;
                default:
                   throw 'uncrouching/' + state + ' not supported';
                break;
@@ -424,11 +439,11 @@ var definePlayerState = function(
          },
          collide: function(state, x, y, vx, vy) {
             console.log('climbing collide', state, x, y, vx, vy);
-            switch(state) {
-               default:
-                  throw 'climbing/' + state + ' not supported';
-               break;
-            }
+
+            that.introduceVelocityIfNecessary(x, vx);
+            that.player.setVelocityX(vx);
+            that.player.changeVelocityY(vy);
+            that.setState('fall');
          },
          keyUp : function(keyState) {
             if (!keyState.up.pressed && !keyState.down.pressed) {
@@ -451,11 +466,11 @@ var definePlayerState = function(
          animation : 'rope',
          collide: function(state, x, y, vx, vy) {
             console.log('rope collide', state, x, y, vx, vy);
-            switch(state) {
-               default:
-                  throw 'rope/' + state + ' not supported';
-               break;
-            }
+
+            that.introduceVelocityIfNecessary(x, vx);
+            that.player.setVelocityX(vx);
+            that.player.changeVelocityY(vy);
+            that.setState('fall');
          },
          keyUp : function(keyState) {
          },
@@ -480,25 +495,7 @@ var definePlayerState = function(
       };
       that.states.ropeFall = {
          animation : 'stand',
-         update : function(elapsed) {
-            if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
-               var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
-               that.player.changeVelocityY(1 * updatePercentage);
-            }
-            
-            if (that.player.getPositionY() >= 320) {
-               that.player.setVelocity(0, 0)
-               that.player.setPositionY(320);
-               that.setState('disintegrate');
-            }
-            else {
-               var platform = that.player.isOnPlatform();
-               if (platform) {
-                  that.player.setVelocity(0, 0);
-                  that.setState('stand');
-               }
-            }            
-         },
+         update : that.updateFall,
          collide: function(state, x, y, vx, vy) {
             console.log('ropeFall collide', state, x, y, vx, vy);
             switch(state) {
@@ -510,34 +507,14 @@ var definePlayerState = function(
       };
       that.states.fall = {
          animation : 'standFall',
-         update : function(elapsed) {         
-            if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
-               var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
-               that.player.changeVelocityY(1 * updatePercentage);
-            }
-            
-            if (that.player.getPositionY() >= 320) {
-               that.player.setVelocity(0, 0);
-               that.player.setPositionY(320);
-               that.setState('disintegrate');
-            }
-            else {
-               var platform = that.player.isOnPlatform();
-               if (platform) {
-                  that.player.setVelocityY(0);
-                  that.player.setPositionY(platform.y - 56);
-                  that.setState('runJump');
-               }
-               if(that.player.getVelocityX() < 0) {
-                  that.player.setFlip(true);
-               } else if(that.player.getVelocityX() > 0) {
-                  that.player.setFlip(false);
-               }
-            }
-         },
+         update : that.updateFall,
          collide: function(state, x, y, vx, vy) {
             console.log('fall collide', state, x, y, vx, vy);
             switch(state) {
+               case 'fall':
+               case 'runJump':
+               case 'standFall':
+               break;
                default:
                   throw 'standFall/' + state + ' not supported';
                break;

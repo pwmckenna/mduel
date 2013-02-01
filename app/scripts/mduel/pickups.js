@@ -119,10 +119,13 @@ var definePickups = function(Animations, Images, Util, MovingObject, Debug, Cons
             case 'invisibility':
             case 'mine':
             case 'gun':
-            players.each(function(player) {
+            players.any(function(player) {
                if(Mduel.Util.colliding(this.getBoundingBox(), player.getBoundingBox())) {
                   this.bestowAbility(player);
                   this.collection.remove(this);
+                  return true;
+               } else {
+                  return false;
                }
             }, this);
             break;

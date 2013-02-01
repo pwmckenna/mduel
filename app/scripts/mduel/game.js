@@ -26,7 +26,7 @@ var defineGame = function(
    Mduel.Debug = Debug;
 
    Mduel.Game.startGame = function() {
-      Mduel.Game.lastFrameDrawn = new Date().valueOf();
+      Mduel.Game.lastFrameDrawn = window.performance.now();
       
       Mduel.Game.state = 'game';
       
@@ -117,13 +117,24 @@ var defineGame = function(
 
 
    Mduel.Game.gameLoop = function(renderTime) {
-      //
       var elapsedTime = renderTime - Mduel.Game.lastFrameDrawn;
-      Mduel.Game.lastFrameDrawn = renderTime;
+      if(elapsedTime < 0) {
+         elapsedTime = 0;
+      }
 
-      Mduel.Game.handleCollisions(elapsedTime);
-      Mduel.Game.update(elapsedTime);
-      Mduel.Game.draw(elapsedTime);
+      // because we have velocities that might carry us well past
+      // walls or cause us to jump inappropriately high, we make sure
+      // that we only ever evaluate a bit of time at a time.
+      var times = Math.ceil(elapsedTime / 30.0);
+      console.log(times);
+      _.times(times, function() {
+         var t = elapsedTime / times;
+         Mduel.Game.lastFrameDrawn += t;
+         Mduel.Game.handleCollisions(t);
+         Mduel.Game.update(t);
+         Mduel.Game.draw(t);
+      });
+
 
       Mduel.Game.requestGameLoop();
    }
@@ -211,7 +222,6 @@ var defineGame = function(
       var y2 = player2.getPositionY();
       var vx2 = player2.getVelocityX();
       var vy2 = player2.getVelocityY();
-
       player1.get('playerState').collide(s2, x2, y2, vx2, vy2);
       player2.get('playerState').collide(s1, x1, y1, vx1, vy1);
    }
