@@ -93,8 +93,22 @@ var defineAnimations = function(Sprites, Animation) {
    Mduel.Animations.knockForward = function() {
       return Mduel.Animation.animation({
          frames: [
-            { sprite: 'knock_forward_1', time: 15 },
-            { sprite: 'knock_forward_2', time: 15 }
+            { sprite: 'knock_forward_1', time: 75 },
+            { sprite: 'knock_forward_2', time: 75 }
+         ],
+         data: Mduel.Sprites.player
+      });
+   }
+
+   Mduel.Animations.knockForwardHard = function() {
+      return Mduel.Animation.animation({
+         frames: [
+            { sprite: 'knock_forward_1', time: 75 },
+            { sprite: 'knock_forward_2', time: 75 },
+            { sprite: 'roll_1', time: 15 },
+            { sprite: 'roll_2', time: 75 },
+            { sprite: 'roll_3', time: 75 },
+            { sprite: 'roll_4', time: 75 }
          ],
          data: Mduel.Sprites.player
       });
@@ -103,8 +117,22 @@ var defineAnimations = function(Sprites, Animation) {
    Mduel.Animations.knockBack = function() {
       return Mduel.Animation.animation({
          frames: [
-            { sprite: 'knock_back_1', time: 15 },
-            { sprite: 'knock_back_2', time: 15 }
+            { sprite: 'knock_back_1', time: 75 },
+            { sprite: 'knock_back_2', time: 75 }
+         ],
+         data: Mduel.Sprites.player
+      });
+   }
+
+   Mduel.Animations.knockBackHard = function() {
+      return Mduel.Animation.animation({
+         frames: [
+            { sprite: 'knock_back_1', time: 75 },
+            { sprite: 'knock_back_2', time: 75 },
+            { sprite: 'roll_4', time: 75 },
+            { sprite: 'roll_3', time: 75 },
+            { sprite: 'roll_2', time: 75 },
+            { sprite: 'roll_1', time: 15 }
          ],
          data: Mduel.Sprites.player
       });

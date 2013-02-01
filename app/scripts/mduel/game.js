@@ -35,6 +35,12 @@ var defineGame = function(
       Mduel.Game.localPlayers = new Backbone.Collection([
          Mduel.Game.generateLocalPlayer(0),
          Mduel.Game.generateLocalPlayer(1)
+         // Mduel.Game.generateLocalPlayer(2),
+         // Mduel.Game.generateLocalPlayer(3),
+         // Mduel.Game.generateLocalPlayer(4),
+         // Mduel.Game.generateLocalPlayer(5),
+         // Mduel.Game.generateLocalPlayer(6),
+         // Mduel.Game.generateLocalPlayer(7)
       ]);
       if(Mduel.Game.localPlayers.on('remove', function() {
          if(Mduel.Game.localPlayers.length <= 1) {
@@ -48,6 +54,16 @@ var defineGame = function(
       window.onkeydown = Mduel.Keyboard.keyDown;
       window.onkeyup = Mduel.Keyboard.keyUp;
       Mduel.Game.requestGameLoop();
+
+      return;
+      setTimeout(function() {
+         Mduel.Keyboard.keyDown({keyCode: '37'});
+         setTimeout(function() {
+            Mduel.Keyboard.keyUp({keyCode: '37'});
+         }, 5)
+         Mduel.Keyboard.keyDown({keyCode: '65'});
+
+      });
    }
 
    Mduel.Game.generateStartPosition = function() {
@@ -65,12 +81,27 @@ var defineGame = function(
          0: Mduel.Images.player1,
          1: Mduel.Images.player2,
          2: Mduel.Images.playerRemote,
-         3: Mduel.Images.playerComputer
+         3: Mduel.Images.playerComputer,
+         4: Mduel.Images.playerComputer,
+         5: Mduel.Images.playerComputer,
+         6: Mduel.Images.playerComputer,
+         7: Mduel.Images.playerComputer
       };
+      var positions = {
+         0: { x: 64, y: 280 },
+         1: { x: 92, y: 280 },
+         2: { x: 480, y: 280 },
+         3: { x: 512, y: 280 },
+         4: { x: 432, y: 24},
+         5: { x: 464, y: 24 },
+         6: { x: 112, y: 24},
+         7: { x: 144, y: 24 }
+      }
       if(!images.hasOwnProperty(id)) {
          throw 'invalid player id';
       }
-      var position = Mduel.Game.generateStartPosition()
+      var position = positions[id];//Mduel.Game.generateStartPosition();
+      console.log(position);
       var player = new Mduel.Player.Player({
          x: position.x, 
          y: position.y,
@@ -168,6 +199,21 @@ var defineGame = function(
 
       // we have a collision!
       console.log('collision');
+
+      var s1 = player1.get('playerState').getState();
+      var x1 = player1.getPositionX();
+      var y1 = player1.getPositionY();
+      var vx1 = player1.getVelocityX();
+      var vy1 = player1.getVelocityY();
+
+      var s2 = player2.get('playerState').getState();
+      var x2 = player2.getPositionX();
+      var y2 = player2.getPositionY();
+      var vx2 = player2.getVelocityX();
+      var vy2 = player2.getVelocityY();
+
+      player1.get('playerState').collide(s2, x2, y2, vx2, vy2);
+      player2.get('playerState').collide(s1, x1, y1, vx1, vy1);
    }
 
    Mduel.Game.handleCollisions = function(elapsedTime) {
