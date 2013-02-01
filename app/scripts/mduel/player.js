@@ -41,6 +41,18 @@ var definePlayer = function(
             player: this
          });
          this.set('playerState', playerState);
+
+         this.on('change:pickup', this.onPickup, this);
+      },
+
+      onPickup: function(pickup) {
+         console.log('onPickup', this.get('pickup'));
+         if(this.get('pickup') === 'lightning') {
+            this.set('lightningSpriteImage', Mduel.Images.player1000V);
+         } else {
+            this.unset('lightningSpriteImage');
+         }
+
       },
 
       getBoundingBox: function() {
@@ -83,7 +95,7 @@ var definePlayer = function(
             ctx.transform(-1, 0, 0, 1, 0, 0);
          }      
          
-         ctx.drawImage(this.get('spriteImage'), 
+         ctx.drawImage(this.get('lightningSpriteImage') || this.get('spriteImage'), 
             // Source X and Y coordinates
             frame.x, frame.y, 
             // Source Width and Height

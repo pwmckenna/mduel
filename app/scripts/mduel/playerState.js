@@ -42,6 +42,7 @@ var definePlayerState = function(
          }         
       };
       that.updateFall = function(elapsed) {
+         console.log('update fall');
          if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
             var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
             that.player.changeVelocityY(1 * updatePercentage);
@@ -65,12 +66,18 @@ var definePlayerState = function(
                   that.setState('stand');
                }
                else {
-                  if ((keyState.right.pressed && !keyState.left.pressed && that.player.getVelocityX() < 0) ||
-                      (keyState.left.pressed && !keyState.right.pressed && that.player.getVelocityX() > 0)) {
-                     that.player.setFlip(!that.player.getFlip());
-                     that.player.setVelocityX(-1 * that.player.getVelocityX());
-                  }
-               
+                  if (keyState.right.pressed && !keyState.left.pressed) {
+                     if(that.player.getVelocityX() < 0) {
+                        that.player.setVelocityX(-1 * that.player.getVelocityX());
+                     }
+                     that.player.setFlip(false);
+                  } 
+                  if (keyState.left.pressed && !keyState.right.pressed) {
+                        if(that.player.getVelocityX() > 0) {
+                           that.player.setVelocityX(-1 * that.player.getVelocityX());
+                        }
+                        that.player.setFlip(true);
+                  } 
                   that.setState('run');
                }
             }
@@ -96,6 +103,8 @@ var definePlayerState = function(
                break;
                case 'fall':
                case 'stand':
+               case 'rope':
+               case 'climbing':
                   that.introduceVelocityIfNecessary(x, vx);
                   that.knock();
                break;
@@ -216,6 +225,7 @@ var definePlayerState = function(
             switch(state) {
                case 'roll':
                case 'crouch':
+               case 'uncrouching':
                case 'stand':
                case 'standJump':
                break;
@@ -298,6 +308,10 @@ var definePlayerState = function(
                   that.player.setVelocityX(-1 * that.player.getVelocityX());
                   that.knock();
                   break;
+               case 'stand':
+                  that.introduceVelocityIfNecessary(x, vx);
+                  that.knock();
+               break;   
                default:
                   throw 'crouch/' + state + ' not supported';
                break;
@@ -443,6 +457,7 @@ var definePlayerState = function(
             that.introduceVelocityIfNecessary(x, vx);
             that.player.setVelocityX(vx);
             that.player.changeVelocityY(vy);
+            that.knock();
             that.setState('fall');
          },
          keyUp : function(keyState) {
@@ -470,6 +485,7 @@ var definePlayerState = function(
             that.introduceVelocityIfNecessary(x, vx);
             that.player.setVelocityX(vx);
             that.player.changeVelocityY(vy);
+            that.knock();
             that.setState('fall');
          },
          keyUp : function(keyState) {
@@ -515,6 +531,12 @@ var definePlayerState = function(
                case 'runJump':
                case 'standFall':
                break;
+               case 'stand':
+               case 'rope':
+               case 'climbing':
+                  that.introduceVelocityIfNecessary(x, vx);
+                  that.knock();
+               break;
                default:
                   throw 'standFall/' + state + ' not supported';
                break;
@@ -556,7 +578,16 @@ var definePlayerState = function(
          }
       }
       
-      that.collide = function(state, x, y, vx, vy) {
+      that.collide = function(state, x, y, vx, vy, lightning) {
+         var l = that.player.get('pickup') === 'lightning';
+         if(lightning && l) {
+            that.player.unset('pickup');
+         } else if(lightning) {
+            that.setState('vaporize');
+            return;
+         } else if(l) {
+            return;
+         }
          if(_.any([state, that.getState()], function(s) {
             return s === 'knockForwardHard' ||
                s === 'knockForward' ||

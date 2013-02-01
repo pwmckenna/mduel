@@ -126,7 +126,6 @@ var defineGame = function(
       // walls or cause us to jump inappropriately high, we make sure
       // that we only ever evaluate a bit of time at a time.
       var times = Math.ceil(elapsedTime / 30.0);
-      console.log(times);
       _.times(times, function() {
          var t = elapsedTime / times;
          Mduel.Game.lastFrameDrawn += t;
@@ -216,14 +215,17 @@ var defineGame = function(
       var y1 = player1.getPositionY();
       var vx1 = player1.getVelocityX();
       var vy1 = player1.getVelocityY();
+      var lightning1 = player1.get('pickup') === 'lightning';
 
       var s2 = player2.get('playerState').getState();
       var x2 = player2.getPositionX();
       var y2 = player2.getPositionY();
       var vx2 = player2.getVelocityX();
       var vy2 = player2.getVelocityY();
-      player1.get('playerState').collide(s2, x2, y2, vx2, vy2);
-      player2.get('playerState').collide(s1, x1, y1, vx1, vy1);
+      var lightning2 = player2.get('pickup') === 'lightning';
+
+      player1.get('playerState').collide(s2, x2, y2, vx2, vy2, lightning2);
+      player2.get('playerState').collide(s1, x1, y1, vx1, vy1, lightning1);
    }
 
    Mduel.Game.handleCollisions = function(elapsedTime) {
