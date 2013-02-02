@@ -584,6 +584,8 @@ var definePlayerState = function(
             that.player.unset('pickup');
          } else if(lightning) {
             that.setState('vaporize');
+            that.player.setVelocityX(10);
+            that.player.setVelocityY(-25);
             return;
          } else if(l) {
             return;
