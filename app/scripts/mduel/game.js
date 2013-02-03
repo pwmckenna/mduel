@@ -7,7 +7,8 @@ var defineGame = function(
    Pickups,
    Keyboard,
    Util,
-   Debug
+   Debug,
+   Constants
 ) {
    console.log('game loaded');
    if (typeof Mduel == 'undefined') {
@@ -24,6 +25,7 @@ var defineGame = function(
    Mduel.Keyboard = Keyboard;
    Mduel.Util = Util;
    Mduel.Debug = Debug;
+   Mduel.Constants = Constants;
 
    Mduel.Game.startGame = function() {
       Mduel.Game.lastFrameDrawn = window.performance.now();
@@ -120,6 +122,11 @@ var defineGame = function(
       var elapsedTime = renderTime - Mduel.Game.lastFrameDrawn;
       if(elapsedTime < 0) {
          elapsedTime = 0;
+      }
+
+      if(elapsedTime > Mduel.Constants.MAX_RENDER_DELAY) {
+         alert('You connection was dropped. Refresh to play');
+         return;
       }
 
       // because we have velocities that might carry us well past
@@ -253,6 +260,7 @@ if(typeof define !== 'undefined') {
       'mduel/keyboard',
       'mduel/util',
       'mduel/debug',
+      'mduel/constants'
    ], _.partial(defineGame, _, Backbone));
 } else if(typeof module !== 'undefined') {
    module.exports = defineGame(
@@ -264,6 +272,7 @@ if(typeof define !== 'undefined') {
       require('./pickups'),
       require('./keyboard'),
       require('./util'),
-      require('./debug')
+      require('./debug'),
+      require('./constants')
    );
 }
