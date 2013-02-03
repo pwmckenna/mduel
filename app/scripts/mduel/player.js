@@ -40,6 +40,7 @@ var definePlayer = function(
          var playerState = Mduel.PlayerState.playerState({ 
             player: this
          });
+         this.set('defaultSpriteImage', this.get('spriteImage'));
          this.set('playerState', playerState);
 
          this.on('change:pickup', this.onPickup, this);
@@ -48,10 +49,13 @@ var definePlayer = function(
       onPickup: function(pickup) {
          console.log('onPickup', this.get('pickup'));
          if(this.get('pickup') === 'lightning') {
-            this.set('lightningSpriteImage', Mduel.Images.player1000V);
+            this.set('spriteImage', Mduel.Images.player1000V);
+         } else if(this.get('pickup') === 'invisibility') {
+            this.set('spriteImage', Mduel.Images.playerInvisible);
          } else {
-            this.unset('lightningSpriteImage');
+            this.set('spriteImage', this.get('defaultSpriteImage'));
          }
+
 
       },
 
@@ -95,7 +99,7 @@ var definePlayer = function(
             ctx.transform(-1, 0, 0, 1, 0, 0);
          }      
          
-         ctx.drawImage(this.get('lightningSpriteImage') || this.get('spriteImage'), 
+         ctx.drawImage(this.get('spriteImage'), 
             // Source X and Y coordinates
             frame.x, frame.y, 
             // Source Width and Height
