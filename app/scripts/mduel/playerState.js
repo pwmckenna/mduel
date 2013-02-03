@@ -41,6 +41,11 @@ var definePlayerState = function(
             );
          }         
       };
+      that.reverseVelocityIfNecessary = function(x) {
+         if(that.player.getPositionX() < x && that.player.getVelocityX() > 0) {
+            that.player.setVelocityX(-that.player.getVelocityX());
+         }
+      };
       that.updateFall = function(elapsed) {
          console.log('update fall');
          if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
@@ -107,6 +112,9 @@ var definePlayerState = function(
                case 'climbing':
                   that.introduceVelocityIfNecessary(x, vx);
                   that.knock();
+               break;
+               case 'crouch':
+                  that.introduceVelocityIfNecessary(x, vx);
                break;
                default:
                   throw 'stand/' + state + ' not supported';
@@ -177,6 +185,11 @@ var definePlayerState = function(
                   that.player.setVelocityX(vx);
                   that.knock();
                   break;
+               case 'fall':
+                  that.introduceVelocityIfNecessary(x, vx);
+                  that.reverseVelocityIfNecessary(x, vx);
+                  that.knock()
+               break;
                case 'stand':
                   that.player.setVelocityX(0);
                   that.knock();
@@ -537,6 +550,9 @@ var definePlayerState = function(
                   that.introduceVelocityIfNecessary(x, vx);
                   that.knock();
                break;
+               case 'run':
+                  that.introduceVelocityIfNecessary(x, vx);
+                  that.knock();
                default:
                   throw 'standFall/' + state + ' not supported';
                break;
