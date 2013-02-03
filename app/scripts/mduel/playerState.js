@@ -551,8 +551,9 @@ var definePlayerState = function(
                   that.knock();
                break;
                case 'run':
-                  that.introduceVelocityIfNecessary(x, vx);
+                  that.player.setVelocityX(vx);
                   that.knock();
+               break;
                default:
                   throw 'standFall/' + state + ' not supported';
                break;
@@ -599,7 +600,7 @@ var definePlayerState = function(
          if(lightning && l) {
             that.player.unset('pickup');
          } else if(lightning) {
-            that.setState('vaporize');
+            that.setState('disintegrate');
             that.player.setVelocityX(vx > 0 ? 10 : -10);
             that.player.setVelocityY(-25);
             return;
