@@ -1,4 +1,12 @@
-var definePickups = function(Animations, Images, Util, MovingObject, Debug, Constants, _) {
+var definePickups = function(
+   _,
+   Animations, 
+   Images, 
+   Util, 
+   MovingObject, 
+   Debug, 
+   Constants
+) {
    console.log('pickups loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
@@ -231,17 +239,16 @@ if(typeof define !== 'undefined') {
       'mduel/util',
       'mduel/movingObject',
       'mduel/debug',
-      'mduel/constants',
-      'underscore'
-   ], definePickups);
+      'mduel/constants'
+   ], _.partial(definePickups, _));
 } else if(typeof module !== 'undefined') {
    module.exports = definePickups(
+      require('underscore'),
       require('../mduel/animations'),
       require('../mduel/images'),
       require('../mduel/util'),
       require('../mduel/movingObject'),
       require('../mduel/debug'),
-      require('../mduel/constants'),
-      require('underscore')
+      require('../mduel/constants')
    );   
 }

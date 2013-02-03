@@ -1,8 +1,8 @@
 var definePlayerState = function(
+   _,
    Animations,
    Keyboard,
-   Constants,
-   _
+   Constants
 ) {
    console.log('playerState loaded');
    if (typeof Mduel == 'undefined') {
@@ -624,14 +624,13 @@ if(typeof define !== 'undefined') {
    define([
       'mduel/animations',
       'mduel/keyboard',
-      'mduel/constants',
-      'underscore'
-   ], definePlayerState);   
+      'mduel/constants'
+   ], _.partial(definePlayerState, _));   
 } else if(typeof module !== 'undefined.') {
    module.exports = definePlayerState(
+      require('./underscore'),
       require('./animations'), 
       require('./keyboard'),
-      require('./constants'),
-      require('./underscore')
+      require('./constants')
    );
 }

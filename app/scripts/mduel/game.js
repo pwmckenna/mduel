@@ -1,13 +1,13 @@
 var defineGame = function(
+   _,
+   Backbone,
    Stage,
    Player, 
    Images, 
    Pickups,
    Keyboard,
    Util,
-   Debug,
-   _,
-   Backbone
+   Debug
 ) {
    console.log('game loaded');
    if (typeof Mduel == 'undefined') {
@@ -253,19 +253,17 @@ if(typeof define !== 'undefined') {
       'mduel/keyboard',
       'mduel/util',
       'mduel/debug',
-      'underscore',
-      'backbone'
-   ], defineGame);
+   ], _.partial(defineGame, _, Backbone));
 } else if(typeof module !== 'undefined') {
    module.exports = defineGame(
+      require('underscore'),
+      require('backbone'),
       require('./stage'),
       require('./player'),
       require('./images'),
       require('./pickups'),
       require('./keyboard'),
       require('./util'),
-      require('./debug'),
-      require('underscore'),
-      require('backbone')
+      require('./debug')
    );
 }

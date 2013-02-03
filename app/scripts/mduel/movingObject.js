@@ -86,10 +86,7 @@ var defineMovingObject = function(
 };
 
 if(typeof define !== 'undefined') {  
-	define([
-		'underscore',
-		'backbone'
-	], defineMovingObject);
+	define([], _.partial(defineMovingObject, _, Backbone));
 } else if(typeof module !== 'undefined.') {
 	module.exports = defineMovingObject(
 		require('underscore'),

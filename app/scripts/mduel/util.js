@@ -90,7 +90,7 @@ var defineUtil = function(_) {
 };
 
 if(typeof define !== 'undefined') {
-   define(['underscore'], defineUtil);   
+   define([], _.partial(defineUtil, _));   
 } else if(typeof module !== 'undefined') {
    module.exports = defineUtil(require('underscore'));
 }

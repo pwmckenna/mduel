@@ -1,12 +1,12 @@
 var definePlayer = function(
+   _,
    Images, 
    PlayerState,
    Stage,
    Util,
    MovingObject,
    Debug,
-   Constants,
-   _
+   Constants
 ) {
    console.log('player loaded');
    if (typeof Mduel == 'undefined') {
@@ -225,18 +225,17 @@ if(typeof define !== 'undefined') {
       'mduel/util',
       'mduel/movingObject',
       'mduel/debug',
-      'mduel/constants',
-      'underscore'
-   ], definePlayer);
+      'mduel/constants'
+   ], _.partial(definePlayer, _));
 } else if(typeof module !== 'undefined.') {
    module.exports = definePlayer(
+      require('underscore'),
       require('./images'),
       require('./playerState'),
       require('./stage'),
       require('./util'),
       require('./movingObject'),
       require('./debug'),
-      require('./constants'),
-      require('underscore')
+      require('./constants')
    );
 }
