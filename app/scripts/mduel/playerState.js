@@ -72,15 +72,11 @@ var definePlayerState = function(
                }
                else {
                   if (keyState.right.pressed && !keyState.left.pressed) {
-                     if(that.player.getVelocityX() < 0) {
-                        that.player.setVelocityX(-1 * that.player.getVelocityX());
-                     }
+                     that.player.setVelocityX(that.player.get('RUN_SPEED'));
                      that.player.setFlip(false);
                   } 
                   if (keyState.left.pressed && !keyState.right.pressed) {
-                        if(that.player.getVelocityX() > 0) {
-                           that.player.setVelocityX(-1 * that.player.getVelocityX());
-                        }
+                        that.player.setVelocityX(-that.player.get('RUN_SPEED'));
                         that.player.setFlip(true);
                   } 
                   that.setState('run');
