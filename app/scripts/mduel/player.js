@@ -152,7 +152,9 @@ var definePlayer = function(
          var playerCenter = this.getPositionX() + 32;
       
          var predX = function(p) {
-            return playerCenter >= p.x && playerCenter <= (p.x + 32);
+            var CLING_FACTOR = 1;
+            return playerCenter >= p.x - CLING_FACTOR && 
+               playerCenter <= (p.x + 32) + CLING_FACTOR;
          };
             
          var columnPlatforms = Mduel.Util.where(Mduel.Game.stage.platforms, predX);
