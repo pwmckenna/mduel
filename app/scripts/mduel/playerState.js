@@ -95,22 +95,20 @@ var definePlayerState = function(
                   that.knock();
                break;
                case 'roll':
-                  that.player.setVelocityY(-10);
+                  that.player.setVelocityY(-8);
                   that.setState('standJump');
                break;
                case 'standJump':
-                  that.player.setVelocityY(-10);
-                  that.setState('standJump');
-               break;
                case 'fall':
                case 'stand':
                case 'rope':
                case 'climbing':
+               case 'crouch':
+               case 'crouching':
+               case 'uncrouching':
+                  that.player.setVelocityX(vx);
                   that.introduceVelocityIfNecessary(x, vx);
                   that.knock();
-               break;
-               case 'crouch':
-                  that.introduceVelocityIfNecessary(x, vx);
                break;
                default:
                   throw 'stand/' + state + ' not supported';
@@ -189,6 +187,13 @@ var definePlayerState = function(
                case 'stand':
                   that.player.setVelocityX(0);
                   that.knock();
+               break;
+               case 'crouching':
+               case 'crouch':
+               case 'uncrouching':
+               case 'roll':
+                  that.player.setVelocityY(-8);
+                  that.setState('knockForwardHard');
                break;
                default:
                   throw 'run/' + state + ' not supported';
@@ -291,7 +296,16 @@ var definePlayerState = function(
             switch(state) {
                case 'standJump':
                   that.player.setVelocityY(-10);
-                  that.setState('standJump');
+                  that.setState('fall');
+               break;
+               case 'stand':
+               case 'crouching':
+               case 'crouch':
+               case 'uncrouching':
+               case 'roll':
+                  that.player.setVelocityX(vx);
+                  that.introduceVelocityIfNecessary(x, vx);
+                  that.knock();
                break;
                default:
                   throw 'crouching/' + state + ' not supported';
@@ -318,9 +332,19 @@ var definePlayerState = function(
                   that.knock();
                   break;
                case 'stand':
+               case 'crouching':
+               case 'crouch':
+               case 'uncrouching':
+               case 'roll':
+                  that.player.setVelocityX(vx);
                   that.introduceVelocityIfNecessary(x, vx);
                   that.knock();
-               break;   
+               break;
+               case 'run':
+               break;
+               case 'fall':
+                  console.log('should check if falling into us, or falling away from us');
+               break;
                default:
                   throw 'crouch/' + state + ' not supported';
                break;
@@ -351,6 +375,16 @@ var definePlayerState = function(
             switch(state) {
                case 'stand':
                case 'standJump':
+               case 'rope':
+               case 'climbing':
+               break;
+               case 'crouching':
+               case 'crouch':
+               case 'uncrouching':
+               case 'roll':
+                  that.player.setVelocityX(vx);
+                  that.introduceVelocityIfNecessary(x, vx);
+                  that.knock();
                break;
                default:
                   throw 'roll/' + state + ' not supported';
@@ -442,8 +476,17 @@ var definePlayerState = function(
             console.log('uncrouching collide', state, x, y, vx, vy);
             switch(state) {
                case 'standJump':
-                  that.introduceVelocityIfNecessary(x, vx);
                   that.player.setVelocityX(vx);
+                  that.introduceVelocityIfNecessary(x, vx);
+                  that.knock();
+               break;
+               case 'stand':
+               case 'crouching':
+               case 'crouch':
+               case 'uncrouching':
+               case 'roll':
+                  that.player.setVelocityX(vx);
+                  that.introduceVelocityIfNecessary(x, vx);
                   that.knock();
                break;
                default:
@@ -463,8 +506,8 @@ var definePlayerState = function(
          collide: function(state, x, y, vx, vy) {
             console.log('climbing collide', state, x, y, vx, vy);
 
-            that.introduceVelocityIfNecessary(x, vx);
             that.player.setVelocityX(vx);
+            that.introduceVelocityIfNecessary(x, vx);
             that.player.changeVelocityY(vy);
             that.knock();
             that.setState('fall');
@@ -491,8 +534,8 @@ var definePlayerState = function(
          collide: function(state, x, y, vx, vy) {
             console.log('rope collide', state, x, y, vx, vy);
 
-            that.introduceVelocityIfNecessary(x, vx);
             that.player.setVelocityX(vx);
+            that.introduceVelocityIfNecessary(x, vx);
             that.player.changeVelocityY(vy);
             that.knock();
             that.setState('fall');
@@ -539,16 +582,20 @@ var definePlayerState = function(
                case 'fall':
                case 'runJump':
                case 'standFall':
+               case 'standJump':
                break;
-               case 'stand':
                case 'rope':
                case 'climbing':
+               case 'stand':
+               case 'run':
+                  that.player.setVelocityX(vx);
                   that.introduceVelocityIfNecessary(x, vx);
                   that.knock();
                break;
-               case 'run':
-                  that.player.setVelocityX(vx);
-                  that.knock();
+               case 'crouch':
+               case 'uncrouching':
+               case 'roll':
+
                break;
                default:
                   throw 'standFall/' + state + ' not supported';
