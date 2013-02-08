@@ -242,11 +242,12 @@ var definePlayerState = function(
                case 'uncrouching':
                case 'stand':
                case 'standJump':
+               case 'fall':d
                break;
                case 'run':
                case 'runJump':
-               that.player.setVelocityX(vx);
-               that.knock();
+                  that.player.setVelocityX(vx);
+                  that.knock();
                break;
                default:
                   throw 'standJump/' + state + ' not supported';
