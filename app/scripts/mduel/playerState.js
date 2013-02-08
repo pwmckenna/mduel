@@ -195,6 +195,9 @@ var definePlayerState = function(
                   that.player.setVelocityY(-10);
                   that.setState('knockForwardHard');
                break;
+               case 'rope':
+               case 'climbing':
+               break;
                default:
                   throw 'run/' + state + ' not supported';
                break;
@@ -380,6 +383,7 @@ var definePlayerState = function(
                case 'rope':
                case 'climbing':
                case 'fall':
+               case 'run':
                break;
                case 'crouching':
                case 'crouch':
