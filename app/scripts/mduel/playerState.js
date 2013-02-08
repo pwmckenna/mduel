@@ -242,7 +242,7 @@ var definePlayerState = function(
                case 'uncrouching':
                case 'stand':
                case 'standJump':
-               case 'fall':d
+               case 'fall':
                break;
                case 'run':
                case 'runJump':
