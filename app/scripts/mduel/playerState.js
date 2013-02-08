@@ -95,7 +95,7 @@ var definePlayerState = function(
                   that.knock();
                break;
                case 'roll':
-                  that.player.setVelocityY(-8);
+                  that.player.setVelocityY(-10);
                   that.setState('standJump');
                break;
                case 'standJump':
@@ -192,7 +192,7 @@ var definePlayerState = function(
                case 'crouch':
                case 'uncrouching':
                case 'roll':
-                  that.player.setVelocityY(-8);
+                  that.player.setVelocityY(-10);
                   that.setState('knockForwardHard');
                break;
                default:
