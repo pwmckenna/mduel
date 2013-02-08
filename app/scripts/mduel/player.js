@@ -50,13 +50,9 @@ var definePlayer = function(
          console.log('onPickup', this.get('pickup'));
          if(this.get('pickup') === 'lightning') {
             this.set('spriteImage', Mduel.Images.player1000V);
-         } else if(this.get('pickup') === 'invisibility') {
-            this.set('spriteImage', Mduel.Images.playerInvisible);
          } else {
             this.set('spriteImage', this.get('defaultSpriteImage'));
          }
-
-
       },
 
       getBoundingBox: function() {
