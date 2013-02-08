@@ -307,6 +307,9 @@ var definePlayerState = function(
                   that.introduceVelocityIfNecessary(x, vx);
                   that.knock();
                break;
+               case 'run':
+               case 'fall':
+               break;
                default:
                   throw 'crouching/' + state + ' not supported';
                break;
@@ -341,9 +344,7 @@ var definePlayerState = function(
                   that.knock();
                break;
                case 'run':
-               break;
                case 'fall':
-                  console.log('should check if falling into us, or falling away from us');
                break;
                default:
                   throw 'crouch/' + state + ' not supported';
@@ -377,6 +378,7 @@ var definePlayerState = function(
                case 'standJump':
                case 'rope':
                case 'climbing':
+               case 'fall':
                break;
                case 'crouching':
                case 'crouch':
@@ -489,6 +491,9 @@ var definePlayerState = function(
                   that.introduceVelocityIfNecessary(x, vx);
                   that.knock();
                break;
+               case 'run':
+               case 'fall':
+               break;
                default:
                   throw 'uncrouching/' + state + ' not supported';
                break;
@@ -588,14 +593,14 @@ var definePlayerState = function(
                case 'climbing':
                case 'stand':
                case 'run':
+               case 'roll':
                   that.player.setVelocityX(vx);
                   that.introduceVelocityIfNecessary(x, vx);
                   that.knock();
                break;
                case 'crouch':
+               case 'crouching':
                case 'uncrouching':
-               case 'roll':
-
                break;
                default:
                   throw 'standFall/' + state + ' not supported';
