@@ -1,5 +1,5 @@
-var defineNodeImages = function() {
-	console.log('node images loaded');
+var defineNodeImages = function(Debug) {
+	Debug.log('node images loaded');
 	if (typeof Mduel == 'undefined') {
 		var Mduel = {};
 	}
@@ -24,8 +24,8 @@ var defineNodeImages = function() {
 	return Mduel.Images;
 }
 
-var defineBrowserImages = function() {
-	console.log('browser images loaded');
+var defineBrowserImages = function(Debug) {
+	Debug.log('browser images loaded');
 	if (typeof Mduel == 'undefined') {
 		var Mduel = {};
 	}
@@ -50,9 +50,8 @@ var defineBrowserImages = function() {
 	return Mduel.Images;
 };
 
-console.log('loading images');
 if(typeof define !== 'undefined') {
-	define([], defineBrowserImages);
+	define(['mduel/debug'], defineBrowserImages);
 } else if(typeof module !== 'undefined') {
-	module.exports = defineNodeImages();
+	module.exports = defineNodeImages(require('./debug'));
 }

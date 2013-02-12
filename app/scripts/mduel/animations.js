@@ -1,5 +1,5 @@
-var defineAnimations = function(Sprites, Animation) {
-   console.log('animations loaded');
+var defineAnimations = function(Sprites, Animation, Debug) {
+   Debug.log('animations loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
    }
@@ -329,10 +329,15 @@ var defineAnimations = function(Sprites, Animation) {
 };
 
 if(typeof define !== 'undefined') {
-   define(['mduel/sprites', 'mduel/animation'], defineAnimations);
+   define([
+      'mduel/sprites', 
+      'mduel/animation',
+      'mduel/debug'
+   ], defineAnimations);
 } else if(typeof module !== 'undefined') {
    module.exports = defineAnimations(
       require('./sprites'), 
-      require('./animation')
+      require('./animation'),
+      require('./debug')
    );
 }

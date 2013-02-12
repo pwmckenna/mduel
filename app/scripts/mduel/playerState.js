@@ -2,9 +2,10 @@ var definePlayerState = function(
    _,
    Animations,
    Keyboard,
-   Constants
+   Constants,
+   Debug
 ) {
-   console.log('playerState loaded');
+   Debug.log('playerState loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
    }
@@ -47,7 +48,7 @@ var definePlayerState = function(
          }
       };
       that.updateFall = function(elapsed) {
-         console.log('update fall');
+         Debug.log('update fall');
          if (that.player.getVelocityY() < that.player.get('MAX_FALL_SPEED')) {
             var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
             that.player.changeVelocityY(1 * updatePercentage);
@@ -87,7 +88,7 @@ var definePlayerState = function(
       that.states.stand = {
          animation: 'stand',
          collide: function(state, x, y, vx, vy) {
-            console.log('stand collide', state, x, y, vx, vy);
+            Debug.log('stand collide', state, x, y, vx, vy);
             switch(state) {
                case 'run':
                case 'runJump':
@@ -171,7 +172,7 @@ var definePlayerState = function(
             }
          },
          collide: function(state, x, y, vx, vy) {
-            console.log('run collide', state, x, y, vx, vy);
+            Debug.log('run collide', state, x, y, vx, vy);
             switch(state) {
                case 'standJump':
                case 'runJump':
@@ -238,7 +239,7 @@ var definePlayerState = function(
          animation : 'standJump',
          update : that.updateFall,
          collide: function(state, x, y, vx, vy) {
-            console.log('standJump collide', state, x, y, vx, vy);
+            Debug.log('standJump collide', state, x, y, vx, vy);
             switch(state) {
                case 'roll':
                case 'crouch':
@@ -262,7 +263,7 @@ var definePlayerState = function(
          animation : 'runJump',
          update : that.updateFall,
          collide: function(state, x, y, vx, vy) {
-            console.log('runJump collide', state, x, y, vx, vy);
+            Debug.log('runJump collide', state, x, y, vx, vy);
             switch(state) {
                case 'stand':
                case 'standJump':
@@ -296,7 +297,7 @@ var definePlayerState = function(
             }
          },
          collide: function(state, x, y, vx, vy) {
-            console.log('crouching collide', state, x, y, vx, vy);
+            Debug.log('crouching collide', state, x, y, vx, vy);
             switch(state) {
                case 'standJump':
                   that.player.setVelocityY(-10);
@@ -328,7 +329,7 @@ var definePlayerState = function(
             }
          },
          collide: function(state, x, y, vx, vy) {
-            console.log('crouch collide', state, x, y, vx, vy);
+            Debug.log('crouch collide', state, x, y, vx, vy);
             switch(state) {
                case 'standJump':
                   that.player.setVelocityY(-10);
@@ -376,7 +377,7 @@ var definePlayerState = function(
             }
          },
          collide: function(state, x, y, vx, vy) {
-            console.log('roll collide', state, x, y, vx, vy);
+            Debug.log('roll collide', state, x, y, vx, vy);
             switch(state) {
                case 'stand':
                case 'standJump':
@@ -480,7 +481,7 @@ var definePlayerState = function(
             }
          },
          collide: function(state, x, y, vx, vy) {
-            console.log('uncrouching collide', state, x, y, vx, vy);
+            Debug.log('uncrouching collide', state, x, y, vx, vy);
             switch(state) {
                case 'standJump':
                   that.player.setVelocityX(vx);
@@ -514,7 +515,7 @@ var definePlayerState = function(
             }
          },
          collide: function(state, x, y, vx, vy) {
-            console.log('climbing collide', state, x, y, vx, vy);
+            Debug.log('climbing collide', state, x, y, vx, vy);
 
             that.player.setVelocityX(vx);
             that.introduceVelocityIfNecessary(x, vx);
@@ -542,7 +543,7 @@ var definePlayerState = function(
       that.states.rope = {
          animation : 'rope',
          collide: function(state, x, y, vx, vy) {
-            console.log('rope collide', state, x, y, vx, vy);
+            Debug.log('rope collide', state, x, y, vx, vy);
 
             that.player.setVelocityX(vx);
             that.introduceVelocityIfNecessary(x, vx);
@@ -575,7 +576,7 @@ var definePlayerState = function(
          animation : 'stand',
          update : that.updateFall,
          collide: function(state, x, y, vx, vy) {
-            console.log('ropeFall collide', state, x, y, vx, vy);
+            Debug.log('ropeFall collide', state, x, y, vx, vy);
             switch(state) {
                default:
                   throw 'stand/' + state + ' not supported';
@@ -587,7 +588,7 @@ var definePlayerState = function(
          animation : 'standFall',
          update : that.updateFall,
          collide: function(state, x, y, vx, vy) {
-            console.log('fall collide', state, x, y, vx, vy);
+            Debug.log('fall collide', state, x, y, vx, vy);
             switch(state) {
                case 'fall':
                case 'runJump':
@@ -640,7 +641,7 @@ var definePlayerState = function(
       }
 
       that.setState = function(state) {
-         console.log('setState', state);
+         Debug.log('setState', state);
          that.state = state;
          if (that.states[state]) {
             that.currentState = that.states[state];
@@ -694,13 +695,15 @@ if(typeof define !== 'undefined') {
    define([
       'mduel/animations',
       'mduel/keyboard',
-      'mduel/constants'
+      'mduel/constants',
+      'mduel/debug'
    ], _.partial(definePlayerState, _));   
 } else if(typeof module !== 'undefined.') {
    module.exports = definePlayerState(
       require('./underscore'),
       require('./animations'), 
       require('./keyboard'),
-      require('./constants')
+      require('./constants'),
+      require('./debug')
    );
 }

@@ -2,11 +2,12 @@ var defineStage = function(
    Images,
    Animations,
    Util,
-   SeedRandom
+   SeedRandom,
+   Debug
 ) {
    var random = SeedRandom.random;
 
-   console.log('stage loaded');
+   Debug.log('stage loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
    }
@@ -296,13 +297,15 @@ if(typeof define !== 'undefined') {
       'mduel/images', 
       'mduel/animations',
       'mduel/util',
-      'vendor/seedrandom'
+      'vendor/seedrandom',
+      'mduel/debug'
    ], defineStage);
 } else if(typeof module !== 'undefined') {
    module.exports = defineStage(
       require('./images'),
       require('./animations'),
       require('./util'),
-      require('../vendor/seedrandom')
+      require('../vendor/seedrandom'),
+      require('./debug')
    );
 }

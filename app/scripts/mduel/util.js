@@ -1,5 +1,5 @@
-var defineUtil = function(_) {
-   console.log('util loaded');
+var defineUtil = function(_, Debug) {
+   Debug.log('util loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
    }
@@ -90,7 +90,10 @@ var defineUtil = function(_) {
 };
 
 if(typeof define !== 'undefined') {
-   define([], _.partial(defineUtil, _));   
+   define(['mduel/debug'], _.partial(defineUtil, _));   
 } else if(typeof module !== 'undefined') {
-   module.exports = defineUtil(require('underscore'));
+   module.exports = defineUtil(
+      require('underscore'),
+      require('./debug')
+   );
 }

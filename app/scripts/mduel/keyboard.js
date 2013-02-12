@@ -1,5 +1,5 @@
-var defineKeyboard = function() {
-   console.log('keyboard loaded');
+var defineKeyboard = function(Debug) {
+   Debug.log('keyboard loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
    }
@@ -133,7 +133,7 @@ var defineKeyboard = function() {
 };
 
 if(typeof define !== 'undefined') {
-   define([], defineKeyboard);
+   define(['mduel/debug'], defineKeyboard);
 } else if(typeof module !== 'undefined') {
-   module.exports = defineKeyboard();
+   module.exports = defineKeyboard(require('./debug'));
 }

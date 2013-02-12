@@ -1,8 +1,9 @@
 var defineMovingObject = function(
 	_,
-	Backbone
+	Backbone,
+	Debug
 ) {
-	console.log('player loaded');
+	Debug.log('player loaded');
 	if (typeof Mduel == 'undefined') {
 		var Mduel = {};
 	}
@@ -86,10 +87,11 @@ var defineMovingObject = function(
 };
 
 if(typeof define !== 'undefined') {  
-	define([], _.partial(defineMovingObject, _, Backbone));
+	define(['mduel/debug'], _.partial(defineMovingObject, _, Backbone));
 } else if(typeof module !== 'undefined.') {
 	module.exports = defineMovingObject(
 		require('underscore'),
-		require('backbone')
+		require('backbone'),
+		require('./debug')
 	);
 }

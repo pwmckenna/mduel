@@ -1,5 +1,5 @@
-var defineSpritesheet = function() {
-   console.log('spriteSheet loaded');
+var defineSpritesheet = function(Debug) {
+   Debug.log('spriteSheet loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
    }
@@ -36,7 +36,7 @@ var defineSpritesheet = function() {
 };
 
 if(typeof define !== 'undefined') {
-   define([], defineSpritesheet);
+   define(['mduel/debug'], defineSpritesheet);
 } else if(typeof module !== 'undefined') {
-   module.exports = defineSpritesheet()
+   module.exports = defineSpritesheet(require('./debug'));
 }

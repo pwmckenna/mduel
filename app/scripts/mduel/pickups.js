@@ -7,7 +7,7 @@ var definePickups = function(
    Debug, 
    Constants
 ) {
-   console.log('pickups loaded');
+   Debug.log('pickups loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
    }

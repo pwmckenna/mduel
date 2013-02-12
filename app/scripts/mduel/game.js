@@ -11,7 +11,7 @@ var defineGame = function(
    Constants,
    Trace
 ) {
-   console.log('game loaded');
+   Debug.log('game loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
    }
@@ -104,7 +104,7 @@ var defineGame = function(
          throw 'invalid player id';
       }
       var position = positions[id];//Mduel.Game.generateStartPosition();
-      console.log(position);
+      Debug.log('starting position', position);
       var player = new Mduel.Player.Player({
          x: position.x, 
          y: position.y,
@@ -223,7 +223,7 @@ var defineGame = function(
       }
 
       // we have a collision!
-      console.log('collision');
+      Debug.log('player collision');
 
       var s1 = player1.get('playerState').getState();
       var x1 = player1.getPositionX();

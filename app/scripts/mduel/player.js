@@ -9,7 +9,7 @@ var definePlayer = function(
    Constants,
    Trace
 ) {
-   console.log('player loaded');
+   Debug.log('player loaded');
    if (typeof Mduel == 'undefined') {
       var Mduel = {};
    }
@@ -45,10 +45,16 @@ var definePlayer = function(
          this.set('playerState', playerState);
 
          this.on('change:pickup', this.onPickup, this);
+         this.on('change', this.onChange, this);
+      },
+
+      onChange: function() {
+         var changes = this.changedAttributes();
+         Debug.log(_.keys(changes));
       },
 
       onPickup: function(pickup) {
-         console.log('onPickup', this.get('pickup'));
+         Debug.log('onPickup', this.get('pickup'));
          if(this.get('pickup') === 'lightning') {
             this.set('spriteImage', Mduel.Images.player1000V);
          } else {
