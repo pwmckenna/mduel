@@ -225,19 +225,19 @@ var definePlayer = function(
          return rval;
       },
       isStanding: function() {
-         return this.get('playerState').this.get('state') === 'stand';
+         return this.get('playerState').get('state') === 'stand';
       },
       isRunning: function() {
-         return this.get('playerState').this.get('state') === 'run';
+         return this.get('playerState').get('state') === 'run';
       },
       isRolling: function() {
-         return this.get('playerState').this.get('state') === 'roll';
+         return this.get('playerState').get('state') === 'roll';
       },
       isCrouching: function() {
-         return this.get('playerState').this.get('state') === 'crouch';
+         return this.get('playerState').get('state') === 'crouch';
       },
       isUncrouching: function() {
-         return this.get('playerState').this.get('state') === 'uncrouching';
+         return this.get('playerState').get('state') === 'uncrouching';
       },
       getFlip: function() {
          return this.get('flip');
