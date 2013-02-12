@@ -115,14 +115,14 @@ var defineGame = function(
    }
 
    Mduel.Game.requestGameLoop = function() {
-      var t = Trace.start('Mduel.Game.requestGameLoop');
+      var trace = Trace.start('Mduel.Game.requestGameLoop');
       requestAnimationFrame(Mduel.Game.gameLoop);
-      t.stop();
+      trace.stop();
    }
 
 
    Mduel.Game.gameLoop = function(renderTime) {
-      var t = Trace.start('Mduel.Game.gameLoop');
+      var trace = Trace.start('Mduel.Game.gameLoop');
       var elapsedTime = renderTime - Mduel.Game.lastFrameDrawn;
       if(elapsedTime < 0) {
          elapsedTime = 0;
@@ -147,22 +147,22 @@ var defineGame = function(
 
 
       Mduel.Game.requestGameLoop();
-      t.stop();
+      trace.stop();
    }
 
 
    Mduel.Game.update = function(elapsedTime) {
-      var t = Trace.start('Mduel.Game.update');
+      var trace = Trace.start('Mduel.Game.update');
       Mduel.Game.stage.update(elapsedTime);
       Mduel.Game.pickups.update(elapsedTime);
       Mduel.Game.localPlayers.each(function(player) {
          player.update(elapsedTime);
       });
-      t.stop();
+      trace.stop();
    }
 
    Mduel.Game.draw = function(elapsedTime) {
-      var t = Trace.start('Mduel.Game.draw');
+      var trace = Trace.start('Mduel.Game.draw');
       var canvas = document.getElementById('game');
       var ctx = canvas.getContext('2d');
       
@@ -177,18 +177,17 @@ var defineGame = function(
          })
          Mduel.Game.pickups.draw(ctx, elapsedTime);
       }
-      
-      t.stop();
+      trace.stop();
    }
 
    Mduel.Game.handlePickupCollisions = function(elapsedTime, players) {
-      var t = Trace.start('Mduel.Game.handlePickupCollisions');
+      var trace = Trace.start('Mduel.Game.handlePickupCollisions');
       Mduel.Game.pickups.handleCollisions(elapsedTime, players, Mduel.Game.stage);
-      t.stop();
+      trace.stop();
    }
 
    Mduel.Game.handleWallCollisions = function(elapsedTime, player) {
-      var t = Trace.start('Mduel.Game.handleWallCollisions');
+      var trace = Trace.start('Mduel.Game.handleWallCollisions');
       var canvas = document.getElementById('game');
 
       var boundingBox = player.getBoundingBox();
@@ -211,11 +210,11 @@ var defineGame = function(
          player.setFlip(!player.getFlip());
          player.setVelocityX(-1 * player.getVelocityX());
       }
-      t.stop();
+      trace.stop();
    }
 
    Mduel.Game.handlePlayerCollisions = function(elapsedTime, player1, player2) {
-      var t = Trace.start('Mduel.Game.handlePlayerCollisions');
+      var trace = Trace.start('Mduel.Game.handlePlayerCollisions');
       if(player1 === player2) {
          return;
       }
@@ -242,11 +241,11 @@ var defineGame = function(
 
       player1.get('playerState').collide(s2, x2, y2, vx2, vy2, lightning2);
       player2.get('playerState').collide(s1, x1, y1, vx1, vy1, lightning1);
-      t.stop();
+      trace.stop();
    }
 
    Mduel.Game.handleCollisions = function(elapsedTime) {
-      var t = Trace.start('Mduel.Game.handleCollisions');
+      var trace = Trace.start('Mduel.Game.handleCollisions');
       Mduel.Game.handlePickupCollisions(elapsedTime, Mduel.Game.localPlayers);
       for (var i = 0; i < Mduel.Game.localPlayers.length; i++) {
          var player = Mduel.Game.localPlayers.at(i);
@@ -257,7 +256,7 @@ var defineGame = function(
             Mduel.Game.handlePlayerCollisions(elapsedTime, player, other)
          }
       }
-      t.stop();
+      trace.stop();
    }
 
    return Mduel.Game;
