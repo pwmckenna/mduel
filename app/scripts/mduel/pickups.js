@@ -102,7 +102,7 @@ var definePickups = function(
       },
 
       killPlayer: function(player) {
-         player.get('playerState').setState('disintegrate');
+         player.get('playerState').set('state', 'disintegrate');
          player.setVelocity(0, 0);
       },
 
@@ -173,7 +173,7 @@ var definePickups = function(
                      });
                      stage.platforms.splice(i, 1);
                      _.each(affectedPlayers, function(player) {
-                        player.get('playerState').setState('runJump');
+                        player.get('playerState').set('state', 'runJump');
                      });
                   }
                }

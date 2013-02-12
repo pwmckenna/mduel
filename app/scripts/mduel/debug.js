@@ -1,6 +1,6 @@
 define([], function() {
 	return {
-		boundingBoxes: true,
+		boundingBoxes: false,
 		trace: false,
 		log: function() {
 			if(typeof console !== 'undefined' && typeof console['log'] === 'function') {

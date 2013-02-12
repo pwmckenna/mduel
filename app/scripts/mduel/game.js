@@ -225,14 +225,14 @@ var defineGame = function(
       // we have a collision!
       Debug.log('player collision');
 
-      var s1 = player1.get('playerState').getState();
+      var s1 = player1.get('playerState').get('state');
       var x1 = player1.getPositionX();
       var y1 = player1.getPositionY();
       var vx1 = player1.getVelocityX();
       var vy1 = player1.getVelocityY();
       var lightning1 = player1.get('pickup') === 'lightning';
 
-      var s2 = player2.get('playerState').getState();
+      var s2 = player2.get('playerState').get('state');
       var x2 = player2.getPositionX();
       var y2 = player2.getPositionY();
       var vx2 = player2.getVelocityX();
