@@ -8,7 +8,8 @@ var defineGame = function(
    Keyboard,
    Util,
    Debug,
-   Constants
+   Constants,
+   Trace
 ) {
    console.log('game loaded');
    if (typeof Mduel == 'undefined') {
@@ -114,11 +115,14 @@ var defineGame = function(
    }
 
    Mduel.Game.requestGameLoop = function() {
+      var t = Trace.start('Mduel.Game.requestGameLoop');
       requestAnimationFrame(Mduel.Game.gameLoop);
+      t.stop();
    }
 
 
    Mduel.Game.gameLoop = function(renderTime) {
+      var t = Trace.start('Mduel.Game.gameLoop');
       var elapsedTime = renderTime - Mduel.Game.lastFrameDrawn;
       if(elapsedTime < 0) {
          elapsedTime = 0;
@@ -143,18 +147,22 @@ var defineGame = function(
 
 
       Mduel.Game.requestGameLoop();
+      t.stop();
    }
 
 
    Mduel.Game.update = function(elapsedTime) {
+      var t = Trace.start('Mduel.Game.update');
       Mduel.Game.stage.update(elapsedTime);
       Mduel.Game.pickups.update(elapsedTime);
       Mduel.Game.localPlayers.each(function(player) {
          player.update(elapsedTime);
       });
+      t.stop();
    }
 
    Mduel.Game.draw = function(elapsedTime) {
+      var t = Trace.start('Mduel.Game.draw');
       var canvas = document.getElementById('game');
       var ctx = canvas.getContext('2d');
       
@@ -170,18 +178,17 @@ var defineGame = function(
          Mduel.Game.pickups.draw(ctx, elapsedTime);
       }
       
-      if (Mduel.Debug.debug) {
-         ctx.fillStyle = '#f00';
-         ctx.font = 'arial 30px sans-serif';
-         ctx.fillText(Mduel.Debug.debugText || '', 5, 10);
-      }
+      t.stop();
    }
 
    Mduel.Game.handlePickupCollisions = function(elapsedTime, players) {
+      var t = Trace.start('Mduel.Game.handlePickupCollisions');
       Mduel.Game.pickups.handleCollisions(elapsedTime, players, Mduel.Game.stage);
+      t.stop();
    }
 
    Mduel.Game.handleWallCollisions = function(elapsedTime, player) {
+      var t = Trace.start('Mduel.Game.handleWallCollisions');
       var canvas = document.getElementById('game');
 
       var boundingBox = player.getBoundingBox();
@@ -203,10 +210,12 @@ var defineGame = function(
          }
          player.setFlip(!player.getFlip());
          player.setVelocityX(-1 * player.getVelocityX());
-      }      
+      }
+      t.stop();
    }
 
    Mduel.Game.handlePlayerCollisions = function(elapsedTime, player1, player2) {
+      var t = Trace.start('Mduel.Game.handlePlayerCollisions');
       if(player1 === player2) {
          return;
       }
@@ -233,9 +242,11 @@ var defineGame = function(
 
       player1.get('playerState').collide(s2, x2, y2, vx2, vy2, lightning2);
       player2.get('playerState').collide(s1, x1, y1, vx1, vy1, lightning1);
+      t.stop();
    }
 
    Mduel.Game.handleCollisions = function(elapsedTime) {
+      var t = Trace.start('Mduel.Game.handleCollisions');
       Mduel.Game.handlePickupCollisions(elapsedTime, Mduel.Game.localPlayers);
       for (var i = 0; i < Mduel.Game.localPlayers.length; i++) {
          var player = Mduel.Game.localPlayers.at(i);
@@ -246,6 +257,7 @@ var defineGame = function(
             Mduel.Game.handlePlayerCollisions(elapsedTime, player, other)
          }
       }
+      t.stop();
    }
 
    return Mduel.Game;
@@ -260,7 +272,8 @@ if(typeof define !== 'undefined') {
       'mduel/keyboard',
       'mduel/util',
       'mduel/debug',
-      'mduel/constants'
+      'mduel/constants',
+      'mduel/trace'
    ], _.partial(defineGame, _, Backbone));
 } else if(typeof module !== 'undefined') {
    module.exports = defineGame(
@@ -273,6 +286,7 @@ if(typeof define !== 'undefined') {
       require('./keyboard'),
       require('./util'),
       require('./debug'),
-      require('./constants')
+      require('./constants'),
+      require('./trace')
    );
 }

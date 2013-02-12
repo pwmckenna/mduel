@@ -121,19 +121,31 @@ var defineStage = function(
              
          for (var j = 0; j < currentLevel.length; j++) {
             if (currentLevel[j]) {
-               rval.push({ x: (j * 32) + 32, y: (i * verticalSpacing) + verticalOffset, isSpawn: false });
+               rval.push({ 
+                  x: (j * 32) + 32, 
+                  y: (i * verticalSpacing) + verticalOffset, 
+                  isSpawn: false 
+               });
             }
          }
       }   
       
       // Left spawn platforms
       for (var ls = 0; ls < 4; ls++) {
-         rval.push({ x: (32 * ls) + 48, y: (4 * verticalSpacing) + verticalOffset, isSpawn: true });
+         rval.push({ 
+            x: (32 * ls) + 48, 
+            y: (4 * verticalSpacing) + verticalOffset, 
+            isSpawn: true 
+         });
       }   
       
       // Right spawn platforms
       for (var ls = 0; ls < 4; ls++) {
-         rval.push({ x: (32 * (ls + 13)) + 48, y: (4 * verticalSpacing) + verticalOffset, isSpawn: true });
+         rval.push({ 
+            x: (32 * (ls + 13)) + 48, 
+            y: (4 * verticalSpacing) + verticalOffset, 
+            isSpawn: true 
+         });
       }
       
       // Generate ropes

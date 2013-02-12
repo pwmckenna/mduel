@@ -6,7 +6,8 @@ var definePlayer = function(
    Util,
    MovingObject,
    Debug,
-   Constants
+   Constants,
+   Trace
 ) {
    console.log('player loaded');
    if (typeof Mduel == 'undefined') {
@@ -56,6 +57,7 @@ var definePlayer = function(
       },
 
       getBoundingBox: function() {
+         var t = Trace.start('player getBoundingBox');
          var image = this.get('spriteImage');
          var flip = this.get('flip');
          var frame = this.get('playerState').currentAnimation.getSprite();
@@ -66,6 +68,7 @@ var definePlayer = function(
             width: box.width, 
             height: box.height 
          };
+         t.stop();
       },
 
       celebrateVictory: function() {
@@ -79,6 +82,7 @@ var definePlayer = function(
       },
 
       draw: function(ctx, elapsed) {
+         var t = Trace.start('player draw');
          var posNew = { 
             x: this.getPositionX(), 
             y: this.getPositionY()
@@ -110,15 +114,17 @@ var definePlayer = function(
             ctx.restore();      
          }
 
-         if(Mduel.Debug.debug) {
+         if(Mduel.Debug.boundingBoxes) {
             var box = this.getBoundingBox();
             //draw the bounding box so we can work on collision detection
             ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
             ctx.strokeRect(box.x, box.y, box.width, box.height);
          }
+         t.stop();
       },
       
       update: function(elapsed) {
+         var t = Trace.start('player update');
          // Update position
          var updatePercentage =  elapsed / Mduel.Constants.UPDATE_RATE;
          var vx = this.getVelocityX();
@@ -131,6 +137,7 @@ var definePlayer = function(
          }
 
          this.get('playerState').update(elapsed);
+         t.stop();
       },
          
       keyUp: function(keyState) {
@@ -227,7 +234,8 @@ if(typeof define !== 'undefined') {
       'mduel/util',
       'mduel/movingObject',
       'mduel/debug',
-      'mduel/constants'
+      'mduel/constants',
+      'mduel/trace'
    ], _.partial(definePlayer, _));
 } else if(typeof module !== 'undefined.') {
    module.exports = definePlayer(
@@ -238,6 +246,7 @@ if(typeof define !== 'undefined') {
       require('./util'),
       require('./movingObject'),
       require('./debug'),
-      require('./constants')
+      require('./constants'),
+      require('./trace')
    );
 }

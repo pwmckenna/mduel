@@ -92,7 +92,7 @@ var definePickups = function(
       draw: function(ctx, elapsed) {
          this.drawAnimation(ctx, elapsed, this.get('bubble'));
          this.drawAnimation(ctx, elapsed, this.get('image'));
-         if(Mduel.Debug.debug) {
+         if(Mduel.Debug.boundingBoxes) {
             var box = this.getBoundingBox();
             //draw the bounding box so we can work on collision detection
             //draw the bounding box so we can work on collision detection
@@ -219,9 +219,19 @@ var definePickups = function(
          var vy = 1.8 - vx;
          vx = Math.random() < 0.5 ? vx : -vx;
          vy = Math.random() < 0.5 ? vy : -vy;
+
+         var startingLocations = [
+            { x: 20, y: 180 },
+            { x: 300, y: 20 },
+            { x: 590, y: 180 }
+         ];
+         var startingLocation = startingLocations[Math.floor(Math.random() * 3)];
+
          var pickup = new Mduel.Pickups.Pickup({
-            x: 320 - 16,
-            y: 20,
+            //x: 320 - 16,
+            //y: 20,
+            x: startingLocation.x,
+            y: startingLocation.y,
             vx: vx,
             vy: vy
          });
