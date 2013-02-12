@@ -118,7 +118,10 @@ var definePlayerState = function(
             return;
          }
          var currentState = this.get('currentState');
-         if (currentState && currentState.hasOwnProperty('collide') && typeof currentState['collide'] === 'function') {
+         if (currentState && 
+            currentState.hasOwnProperty('collide') && 
+            typeof currentState['collide'] === 'function'
+         ) {
             currentState.collide.call(this, state, x, y, vx, vy);
          } else {
             throw state + ' collisions not supported';
