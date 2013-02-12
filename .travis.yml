@@ -25,7 +25,7 @@ env:
     #
     # travis encrypt GH_OAUTH_TOKEN=b2797fff05e7461c4c8174fae08fb006cbadba9f
     #
-    - secure: "urFKgTBUN1TA3lr5p8RG+ZI2zHCZxZjP7kHF9tKhPTCzXHUQxxROBSoisZln\n8f3NvnUwdfuUf0F9NjMiI52PB9yvlN4zvcIrMYHX2bxQHRH3xsMUPegBUvaV\ncKJi0+XREmMBgG66Rneuddvy6/S1oi4z/NeK4b2WVTyA3LOWE/o="
+    - secure: "fPayt+89Ymzwvxxn2Srf9FCuhfJnC/GygYeHEYIVYOABSC496LLtJwJ/QrxW\n4WqpHhGuBgKAEjcyJBp2nz5EcACGeqqbsg1OAwD4N7r3A0za7HgEDng+Pdz7\nVYPTOS1VZg/+9vIyJoDyZe5tMyteSDGnBvex41RENar01R83anw="
     # User specific env variables
     - GH_USER_NAME: pwmckenna
     - GH_PROJECT_NAME: mduel
