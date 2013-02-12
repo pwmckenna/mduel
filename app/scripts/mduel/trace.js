@@ -1,6 +1,6 @@
-define([], function() {
+define(['mduel/debug'], function(Debug) {
 	var trace = false;
-	if(typeof console !== 'undefined' && console.hasOwnProperty('time')) {
+	if(Debug.trace && typeof console !== 'undefined' && console.hasOwnProperty('time')) {
 		trace = true;
 	}
 	return {
