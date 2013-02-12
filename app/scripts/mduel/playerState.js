@@ -26,6 +26,11 @@ var definePlayerState = function(
          this.onStateChange();
       },
 
+      set: function() {
+         console.log('set', arguments);
+         Backbone.Model.prototype.set.apply(this, arguments);
+      },
+
       onStateChange: function() {
          var state = this.get('state');
          Debug.log('setState', state);

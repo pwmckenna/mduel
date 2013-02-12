@@ -22,7 +22,12 @@ var defineMovingObject = function(
 		},
 
 		getBoundingBox: function() {
-			throw 'getBoundingBox must be defined in the inheriting object';
+			return {
+				x: this.get('bx'),
+				y: this.get('by'),
+				width: this.get('bw'),
+				height: this.get('bh')
+			};
 		},
 
 		//all the gets

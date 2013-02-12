@@ -40,16 +40,16 @@ var definePickups = function(
          this.set('image', image);
       },
 
-      getBoundingBox: function() {
+      setBoundingBox: function() {
          var image = Mduel.Images.pickups;
          var frame = this.get('bubble').getSprite();
          var box = Mduel.Util.calculateBoundingBox(image, false, frame);
-         return { 
-            x: this.getPositionX() + box.x, 
-            y: this.getPositionY() + box.y, 
-            width: box.width, 
-            height: box.height 
-         };
+         this.set({
+            bx: this.getPositionX() + box.x, 
+            by: this.getPositionY() + box.y, 
+            bw: box.width, 
+            bh: box.height 
+         });
       },
 
       drawAnimation: function(ctx, elapsed, animation, pos) {
@@ -86,7 +86,8 @@ var definePickups = function(
             this.setVelocityY(Math.abs(this.getVelocityY()));
          } else if(this.getPositionY() > (400 - 30 - 30)) {
             this.setVelocityY(-Math.abs(this.getVelocityY()));
-         }         
+         }
+         this.setBoundingBox();
       },
 
       draw: function(ctx, elapsed) {

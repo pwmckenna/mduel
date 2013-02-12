@@ -36,44 +36,51 @@ var definePlayer = function(
          MAX_FALL_SPEED: 12
       }, Mduel.MovingObject.prototype.defaults),
       initialize: function() {
+         var trace = Trace.start('player initialize');
          var playerState = new Mduel.PlayerState.PlayerState({ 
             player: this
          });
-         this.set('defaultSpriteImage', this.get('spriteImage'), { silent: true });
-         this.set('playerState', playerState, { silent: true });
+         this.set({
+            defaultSpriteImage: this.get('spriteImage'),
+            playerState: playerState
+         });
 
          this.on('change:pickup', this.onPickup, this);
          this.setBoundingBox();
+         trace.stop();
+      },
+
+      set: function() {
+         console.log('set', arguments);
+         Backbone.Model.prototype.set.apply(this, arguments);
       },
 
       save: function() {
+         var trace = Trace.start('player save');
          var playerChanges = this.changedAttributes();
          if(playerChanges) {
-            Debug.log(_.keys(playerChanges));
+            //Debug.log('playerChanges', playerChanges);
          }
 
          var playerStateChanges = this.get('playerState').changedAttributes();
          if(playerStateChanges) {
-            //Debug.log(_.keys(playerStateChanges));
+            //Debug.log('playerStateChanges', playerStateChanges);
          }
 
          //trigger a change event for this and player state
          //to reset the changedAttributes
          this.trigger('change');
          this.get('playerState').trigger('change');
+         trace.stop();
       },
 
       onPickup: function(pickup) {
          Debug.log('onPickup', this.get('pickup'));
          if(this.get('pickup') === 'lightning') {
-            this.set('spriteImage', Mduel.Images.player1000V, { silent: true });
+            this.set('spriteImage', Mduel.Images.player1000V);
          } else {
-            this.set('spriteImage', this.get('defaultSpriteImage'), { silent: true });
+            this.set('spriteImage', this.get('defaultSpriteImage'));
          }
-      },
-
-      getBoundingBox: function() {
-         return this.get('box');
       },
 
       setBoundingBox: function() {
@@ -82,12 +89,12 @@ var definePlayer = function(
          var flip = this.get('flip');
          var frame = this.get('playerState').get('currentAnimation').getSprite();
          var box = Mduel.Util.calculateBoundingBox(image, flip, frame);
-         this.set('box', {
-            x: this.getPositionX() + box.x, 
-            y: this.getPositionY() + box.y, 
-            width: box.width, 
-            height: box.height 
-         }, { silent: true });
+         this.set({
+            bx: this.getPositionX() + box.x, 
+            by: this.getPositionY() + box.y, 
+            bw: box.width, 
+            bh: box.height
+         });
          trace.stop();
       },
 
@@ -243,7 +250,7 @@ var definePlayer = function(
          return this.get('flip');
       },
       setFlip: function(flip) {
-         this.set('flip', flip, { silent: true });
+         this.set('flip', flip);
       }
    });
 
