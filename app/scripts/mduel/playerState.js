@@ -111,7 +111,7 @@ var definePlayerState = function(
       collide: function(state, x, y, vx, vy, lightning) {
          var l = this.get('player').get('pickup') === 'lightning';
          if(lightning && l) {
-            this.get('player').unset('pickup');
+            this.get('player').set('pickup', null);
          } else if(lightning) {
             this.set('state', 'disintegrate');
             this.get('player').setVelocityX(vx > 0 ? 10 : -10);
