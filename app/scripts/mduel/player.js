@@ -51,7 +51,14 @@ var definePlayer = function(
       },
 
       set: function() {
-         console.log('set', arguments);
+         var args = _.toArray(arguments);
+         if(typeof args[0] === 'object') {
+            args[1] = _.extend(args[2] || {}, { silent: true });
+         } else if(typeof args[0] === 'string') {
+            args[2] = _.extend(args[2] || {}, { silent: true });
+         } else {
+            throw 'invalid player state set key type';
+         }
          Backbone.Model.prototype.set.apply(this, arguments);
       },
 
@@ -59,18 +66,19 @@ var definePlayer = function(
          var trace = Trace.start('player save');
          var playerChanges = this.changedAttributes();
          if(playerChanges) {
-            //Debug.log('playerChanges', playerChanges);
+            Debug.log('playerChanges', playerChanges);
          }
 
          var playerStateChanges = this.get('playerState').changedAttributes();
          if(playerStateChanges) {
-            //Debug.log('playerStateChanges', playerStateChanges);
+            Debug.log('playerStateChanges', playerStateChanges);
          }
 
          //trigger a change event for this and player state
          //to reset the changedAttributes
-         this.trigger('change');
-         this.get('playerState').trigger('change');
+         this.set({});
+         this.get('playerState').set({});
+
          trace.stop();
       },
 

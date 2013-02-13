@@ -27,7 +27,14 @@ var definePlayerState = function(
       },
 
       set: function() {
-         console.log('set', arguments);
+         var args = _.toArray(arguments);
+         if(typeof args[0] === 'object') {
+            args[1] = _.extend(args[2] || {}, { silent: true });
+         } else if(typeof args[0] === 'string') {
+            args[2] = _.extend(args[2] || {}, { silent: true });
+         } else {
+            throw 'invalid player state set key type';
+         }
          Backbone.Model.prototype.set.apply(this, arguments);
       },
 
