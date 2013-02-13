@@ -1,5 +1,6 @@
 var definePickups = function(
    _,
+   Backbone,
    Animations, 
    Images, 
    Util, 
@@ -251,10 +252,11 @@ if(typeof define !== 'undefined') {
       'mduel/movingObject',
       'mduel/debug',
       'mduel/constants'
-   ], _.partial(definePickups, _));
+   ], _.partial(definePickups, _, Backbone));
 } else if(typeof module !== 'undefined') {
    module.exports = definePickups(
       require('underscore'),
+      require('backbone'),
       require('../mduel/animations'),
       require('../mduel/images'),
       require('../mduel/util'),

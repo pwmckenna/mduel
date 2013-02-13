@@ -9,11 +9,11 @@
 	var pickupFirebase = gameFirebase.child('pickups');
 
 	var players = [];
-	var pickups = Pickups.pickups(pickupFirebase);
+	var pickups = new Pickups.Pickups(pickupFirebase);
 
 	var onPlayerAdded = function(dataSnapshot) {
 		console.log('onPlayerAdded');
-		var player = Player.player({
+		var player = new Player.Player({
            firebase: dataSnapshot.ref()
         });
 		players.push(player);

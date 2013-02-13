@@ -1,4 +1,4 @@
-define([], function() {
+var defineDebug = function() {
 	return {
 		boundingBoxes: false,
 		trace: false,
@@ -18,4 +18,9 @@ define([], function() {
 			}
 		}
 	};
-});
+};
+if(typeof define !== 'undefined') {
+   define([], defineDebug);
+} else if(typeof module !== 'undefined') {
+   module.exports = defineDebug();
+}

@@ -1,5 +1,6 @@
 var definePlayerState = function(
    _,
+   Backbone,
    Animations,
    Keyboard,
    Constants,
@@ -734,10 +735,11 @@ if(typeof define !== 'undefined') {
       'mduel/keyboard',
       'mduel/constants',
       'mduel/debug'
-   ], _.partial(definePlayerState, _));   
+   ], _.partial(definePlayerState, _, Backbone));   
 } else if(typeof module !== 'undefined.') {
    module.exports = definePlayerState(
-      require('./underscore'),
+      require('underscore'),
+      require('backbone'),
       require('./animations'), 
       require('./keyboard'),
       require('./constants'),

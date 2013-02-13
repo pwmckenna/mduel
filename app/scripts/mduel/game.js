@@ -45,28 +45,28 @@ var defineGame = function(
          // Mduel.Game.generateLocalPlayer(6),
          // Mduel.Game.generateLocalPlayer(7)
       ]);
-      if(Mduel.Game.localPlayers.on('remove', function() {
-         if(Mduel.Game.localPlayers.length <= 1) {
-            Mduel.Game.localPlayers.each(function(player) {
-               player.celebrateVictory();
-            });
-         }
-      }));
+      Mduel.Game.remotePlayers = new Backbone.Collection();
+      // if(Mduel.Game.localPlayers.on('remove', function() {
+      //    if(Mduel.Game.localPlayers.length <= 1) {
+      //       Mduel.Game.localPlayers.each(function(player) {
+      //          player.celebrateVictory();
+      //       });
+      //    }
+      // }));
 
 
       window.onkeydown = Mduel.Keyboard.keyDown;
       window.onkeyup = Mduel.Keyboard.keyUp;
       Mduel.Game.requestGameLoop();
 
-      return;
-      setTimeout(function() {
-         Mduel.Keyboard.keyDown({keyCode: '37'});
-         setTimeout(function() {
-            Mduel.Keyboard.keyUp({keyCode: '37'});
-         }, 5)
-         Mduel.Keyboard.keyDown({keyCode: '65'});
+      // setTimeout(function() {
+      //    Mduel.Keyboard.keyDown({keyCode: '37'});
+      //    setTimeout(function() {
+      //       Mduel.Keyboard.keyUp({keyCode: '37'});
+      //    }, 5)
+      //    Mduel.Keyboard.keyDown({keyCode: '65'});
 
-      });
+      // });
    }
 
    Mduel.Game.generateStartPosition = function() {
@@ -254,6 +254,10 @@ var defineGame = function(
          for (var j = i + 1; j < Mduel.Game.localPlayers.length; j++) {
             var other = Mduel.Game.localPlayers.at(j);
             Mduel.Game.handlePlayerCollisions(elapsedTime, player, other)
+         }
+         for (var j = 0; j < Mduel.Game.remotePlayers.length; j++) {
+            var other = Mduel.Game.remotePlayers.at(j);
+            Mduel.Game.handlePlayerCollisions(elapsedTime, player, other);
          }
       }
       trace.stop();

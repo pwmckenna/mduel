@@ -1,4 +1,4 @@
-define(['mduel/debug'], function(Debug) {
+var defineTrace = function(Debug) {
 	var trace = false;
 	if(Debug.trace && typeof console !== 'undefined' && console.hasOwnProperty('time')) {
 		trace = true;
@@ -13,4 +13,10 @@ define(['mduel/debug'], function(Debug) {
 			}
 		}
 	};
-});
+};
+
+if(typeof define !== 'undefined') {
+   define(['mduel/debug'], defineTrace);
+} else if(typeof module !== 'undefined') {
+   module.exports = defineTrace(require('./debug'));
+}
