@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "underscore": "~1.4.4",
-    "backbone": "~0.9.10"
+    "backbone": "~0.9.10",
+    "q": "~0.8.12"
   }
 }

@@ -25,18 +25,18 @@ var definePlayerState = function(
          }
          this.on('change:state', this.onStateChange, this);
          this.onStateChange();
+         this.get('player').firebase.child('state').on('value', this.onFirebaseState, this);
+      },
+      
+      onFirebaseState: function(valueSnapshot) {
+         console.log('onFirebaseState', valueSnapshot.val());
+         this.set('state', valueSnapshot.val());
       },
 
-      set: function() {
-         var args = _.toArray(arguments);
-         if(typeof args[0] === 'object') {
-            args[1] = _.extend(args[2] || {}, { silent: true });
-         } else if(typeof args[0] === 'string') {
-            args[2] = _.extend(args[2] || {}, { silent: true });
-         } else {
-            throw 'invalid player state set key type';
-         }
-         Backbone.Model.prototype.set.apply(this, arguments);
+      save: function() {
+         this.get('player').firebase.update({
+            'state': this.get('state')
+         })
       },
 
       onStateChange: function() {
@@ -706,7 +706,6 @@ var definePlayerState = function(
                update : function(elapsed) {
                   if (this.get('currentAnimation').isFinished()) {
                      this.set('state', 'dead');
-                     this.get('player').collection.remove(this.get('player'));
                   }
                },
             },
@@ -715,7 +714,6 @@ var definePlayerState = function(
                update : function(elapsed) {
                   if(this.get('currentAnimation').isFinished()) {
                      this.set('state', 'dead');
-                     this.get('player').collection.remove(this.get('player'));
                   }
                }
             },

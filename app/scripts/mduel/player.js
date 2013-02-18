@@ -35,8 +35,9 @@ var definePlayer = function(
          CLIMB_SPEED: 2.5,
          MAX_FALL_SPEED: 12
       }, Mduel.MovingObject.prototype.defaults),
-      initialize: function() {
+      initialize: function(attributes, options) {
          var trace = Trace.start('player initialize');
+         this.firebase = options.firebase;
          var playerState = new Mduel.PlayerState.PlayerState({ 
             player: this
          });
@@ -44,40 +45,27 @@ var definePlayer = function(
             defaultSpriteImage: this.get('spriteImage'),
             playerState: playerState
          });
-
          this.on('change:pickup', this.onPickup, this);
+
+         this.firebase.on('value', this.onValue, this);
          this.setBoundingBox();
          trace.stop();
       },
 
-      set: function() {
-         var args = _.toArray(arguments);
-         if(typeof args[0] === 'object') {
-            args[1] = _.extend(args[2] || {}, { silent: true });
-         } else if(typeof args[0] === 'string') {
-            args[2] = _.extend(args[2] || {}, { silent: true });
-         } else {
-            throw 'invalid player state set key type';
-         }
-         Backbone.Model.prototype.set.apply(this, arguments);
+      onValue: function(valueSnapshot) {
+         var trace = Trace.start('player onValue');
+         var updates = _.pick(valueSnapshot.val(), [
+            'x','y','vx','vy','bx','by','bw','bh', 'flip', 'pickup'
+         ]);
+         this.set(updates);
       },
 
       save: function() {
          var trace = Trace.start('player save');
-         var playerChanges = this.changedAttributes();
-         if(playerChanges) {
-            Debug.log('playerChanges', playerChanges);
-         }
-
-         var playerStateChanges = this.get('playerState').changedAttributes();
-         if(playerStateChanges) {
-            Debug.log('playerStateChanges', playerStateChanges);
-         }
-
-         //trigger a change event for this and player state
-         //to reset the changedAttributes
-         this.set({});
-         this.get('playerState').set({});
+         var updates = _.pick(this.attributes, [
+            'x','y','vx','vy','bx','by','bw','bh', 'flip', 'pickup'
+         ]);
+         this.firebase.update(updates);
 
          trace.stop();
       },
@@ -97,12 +85,21 @@ var definePlayer = function(
          var flip = this.get('flip');
          var frame = this.get('playerState').get('currentAnimation').getSprite();
          var box = Mduel.Util.calculateBoundingBox(image, flip, frame);
-         this.set({
-            bx: this.getPositionX() + box.x, 
-            by: this.getPositionY() + box.y, 
-            bw: box.width, 
-            bh: box.height
-         });
+
+         bx = this.getPositionX() + box.x;
+         by = this.getPositionY() + box.y;
+         bw = box.width;
+         bh = box.height;
+
+         if(bx !== this.get('bx'))
+            this.set('bx', bx);
+         if(by !== this.get('by'))
+            this.set('by', by);
+         if(bw !== this.get('bw'))
+            this.set('bw', bw);
+         if(bh !== this.get('bh'))
+            this.set('bh', bh);
+
          trace.stop();
       },
 
@@ -174,6 +171,7 @@ var definePlayer = function(
          this.get('playerState').update(elapsed);
          this.setBoundingBox();
          this.save();
+         this.get('playerState').save();
          trace.stop();
       },
          
