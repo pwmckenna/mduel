@@ -1,14 +1,13 @@
 {
   "name": "mduel",
-  "version": "0.1.0",
-  "commit": "19cd988c5e7fc3b95f95678f0db79682a95b0b35",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:pwmckenna/mduel.git"
-  },
+  "version": "0.0.0",
   "dependencies": {
+    "requirejs": "~2.1.4",
+    "modernizr": "~2.6.2",
+    "jquery": "~1.9.1",
     "underscore": "~1.4.4",
     "backbone": "~0.9.10",
     "q": "~0.8.12"
-  }
+  },
+  "devDependencies": {}
 }

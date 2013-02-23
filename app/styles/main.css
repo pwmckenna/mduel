@@ -1,1 +1,8 @@
-@import url('layout.css');
+body {
+    background: #fafafa;
+}
+
+.hero-unit {
+    margin: 50px auto 0 auto;
+    width: 300px;
+}
