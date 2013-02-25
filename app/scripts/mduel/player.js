@@ -54,7 +54,11 @@ var definePlayer = function(
 
       onValue: function(valueSnapshot) {
          var trace = Trace.start('player onValue');
-         var updates = _.pick(valueSnapshot.val(), [
+         var val = valueSnapshot.val();
+         if(!val) {
+            return;
+         }
+         var updates = _.pick(val, [
             'x','y','vx','vy','bx','by','bw','bh', 'flip', 'pickup'
          ]);
          this.set(updates);
