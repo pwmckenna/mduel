@@ -267,7 +267,7 @@ var defineGame = function (
 
 if (typeof define !== 'undefined') {
     define([
-        'requestAF',
+        'rAF',
         'underscore',
         'backbone',
         'firebase',
@@ -284,6 +284,7 @@ if (typeof define !== 'undefined') {
     ], defineGame);
 } else if (typeof module !== 'undefined') {
     module.exports = defineGame(
+        require('rAF'),
         require('underscore'),
         require('backbone'),
         require('firebase'),

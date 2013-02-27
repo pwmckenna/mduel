@@ -15,6 +15,9 @@ require.config({
         },
         'firebase': {
             'exports': 'Firebase'
+        },
+        'rAF': {
+            'exports': 'requestAnimationFrame'
         }
     },
     paths: {
@@ -25,14 +28,13 @@ require.config({
         firebase: 'vendor/firebase',
         seedrandom: 'vendor/seedrandom',
         q: 'components/q/q',
-        requestAF: 'vendor/requestAF',
-        cancelAF: 'vendor/cancelAF'
+        rAF: 'vendor/rAF'
     }
 });
-require(['mduel/game'], function (Game) {
+require(['jquery', 'mduel/game'], function ($, Game) {
     'use strict';
-	$(window).load(function () {
-		var gameFirebase = new Firebase('https://mduel.firebaseio.com/game/');
-		Game.startGame(gameFirebase);
-	});
+    console.log('waiting for window load');
+    console.log('let the games begin!');
+    var gameFirebase = new Firebase('https://mduel.firebaseio.com/game/');
+    Game.startGame(gameFirebase);
 });
