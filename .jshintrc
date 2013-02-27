@@ -1,4 +1,10 @@
 {
+    "globals": {
+        "Firebase": false,
+        "$": false,
+        "define": false,
+        "require": false
+    },
     "node": true,
     "browser": true,
     "es5": true,

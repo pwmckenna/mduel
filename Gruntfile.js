@@ -90,6 +90,7 @@ module.exports = function (grunt) {
             all: [
                 'Gruntfile.js',
                 '<%= yeoman.app %>/scripts/*.js',
+                '<%= yeoman.app %>/scripts/mduel/*.js',
                 'test/spec/*.js'
             ]
         },
@@ -272,7 +273,7 @@ module.exports = function (grunt) {
         'cssmin',
         'htmlmin',
         'concat',
-        'uglify',
+        //'uglify',
         'copy',
         'usemin'
     ]);

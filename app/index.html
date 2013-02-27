@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -9,19 +9,20 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-        
         <link rel="stylesheet" href="styles/main.css">
-        <script src="scripts/vendor/modernizr.min.js"></script>
-        <script src="scripts/vendor/jquery.min.js"></script>
-        <script src="scripts/components/underscore/underscore-min.js"></script>
-        <script src="scripts/components/backbone/backbone-min.js"></script>
-        <script src="scripts/vendor/rAF.js"></script>
-        <script src="scripts/vendor/firebase.js"></script>
+
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="scripts/components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
     </head>
     <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+
         <div id="preload" style="display:none;">
           <img id="playerSprite1" src="images/playerSprite1.png" />
           <img id="playerSprite2" src="images/playerSprite2.png" />
@@ -37,29 +38,14 @@
           <img id="mallow" src="images/mallow.png" />
           <img id="pickupSprites" src="images/pickupSprites.png" />
         </div>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
-        <![endif]-->
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <!--script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script-->
-
-
 
 
         <div id="game_container">
             <canvas id="game" width="640" height="400" style="background-color: #000;">Your browser does not support Canvas.</canvas>
         </div>
 
-        <script type="text/javascript" src="scripts/vendor/seedrandom.js"></script>
-
-        <!-- build:js scripts/amd-app.js -->
-        <script data-main="scripts/main" src="scripts/vendor/require.js"></script>
-
+        <!-- build:js scripts/main.js -->
+        <script data-main="scripts/main" src="scripts/components/requirejs/require.js"></script>
+        <!-- endbuild -->
 </body>
 </html>

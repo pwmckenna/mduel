@@ -1,57 +1,49 @@
-var defineNodeImages = function(Debug) {
-	Debug.log('node images loaded');
-	if (typeof Mduel == 'undefined') {
-		var Mduel = {};
-	}
-	if (typeof Mduel.Images == 'undefined') {
-		Mduel.Images = {};
-	}
+var defineNodeImages = function (Debug) {
+    'use strict';
+    Debug.log('node images loaded');
+    var Images = {};
 
-	Mduel.Images.player1 = {};
-	Mduel.Images.player2 = {};
-	Mduel.Images.playerRemote = {};
-	Mduel.Images.playerComputer = {};
-	Mduel.Images.player1000V = {};
-	Mduel.Images.playerInvisible = {};
-	Mduel.Images.platform = {};
-	Mduel.Images.spawn = {};
-	Mduel.Images.powerup = {};
-	Mduel.Images.ropeAnchor = {};
-	Mduel.Images.mallow = {};
-	Mduel.Images.mallowFiller = {};
-	Mduel.Images.pickups = {};
+    Images.player1 = {};
+    Images.player2 = {};
+    Images.playerRemote = {};
+    Images.playerComputer = {};
+    Images.player1000V = {};
+    Images.playerInvisible = {};
+    Images.platform = {};
+    Images.spawn = {};
+    Images.powerup = {};
+    Images.ropeAnchor = {};
+    Images.mallow = {};
+    Images.mallowFiller = {};
+    Images.pickups = {};
 
-	return Mduel.Images;
-}
-
-var defineBrowserImages = function(Debug) {
-	Debug.log('browser images loaded');
-	if (typeof Mduel == 'undefined') {
-		var Mduel = {};
-	}
-	if (typeof Mduel.Images == 'undefined') {
-		Mduel.Images = {};
-	}
-
-	Mduel.Images.player1 = document.getElementById('playerSprite1');
-	Mduel.Images.player2 = document.getElementById('playerSprite2');
-	Mduel.Images.playerRemote = document.getElementById('playerSpriteRemote');
-	Mduel.Images.playerComputer = document.getElementById('playerSpriteComputer');
-	Mduel.Images.player1000V = document.getElementById('playerSprite1000V');
-	Mduel.Images.playerInvisible = document.getElementById('playerSpriteInvisible');
-	Mduel.Images.platform = document.getElementById('main_platform');
-	Mduel.Images.spawn = document.getElementById('spawn_platform');
-	Mduel.Images.powerup = document.getElementById('powerup_spawn');
-	Mduel.Images.ropeAnchor = document.getElementById('rope_anchor');
-	Mduel.Images.mallow = document.getElementById('marshmallowSprites');
-	Mduel.Images.mallowFiller = document.getElementById('mallow');
-	Mduel.Images.pickups = document.getElementById('pickupSprites');
-
-	return Mduel.Images;
+    return Images;
 };
 
-if(typeof define !== 'undefined') {
-	define(['mduel/debug'], defineBrowserImages);
-} else if(typeof module !== 'undefined') {
-	module.exports = defineNodeImages(require('./debug'));
+var defineBrowserImages = function (Debug) {
+    'use strict';
+    Debug.log('browser images loaded');
+    var Images = {};
+
+    Images.player1 = document.getElementById('playerSprite1');
+    Images.player2 = document.getElementById('playerSprite2');
+    Images.playerRemote = document.getElementById('playerSpriteRemote');
+    Images.playerComputer = document.getElementById('playerSpriteComputer');
+    Images.player1000V = document.getElementById('playerSprite1000V');
+    Images.playerInvisible = document.getElementById('playerSpriteInvisible');
+    Images.platform = document.getElementById('main_platform');
+    Images.spawn = document.getElementById('spawn_platform');
+    Images.powerup = document.getElementById('powerup_spawn');
+    Images.ropeAnchor = document.getElementById('rope_anchor');
+    Images.mallow = document.getElementById('marshmallowSprites');
+    Images.mallowFiller = document.getElementById('mallow');
+    Images.pickups = document.getElementById('pickupSprites');
+
+    return Images;
+};
+
+if (typeof define !== 'undefined') {
+    define(['mduel/debug'], defineBrowserImages);
+} else if (typeof module !== 'undefined') {
+    module.exports = defineNodeImages(require('./debug'));
 }
