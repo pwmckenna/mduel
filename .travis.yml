@@ -19,10 +19,10 @@ env:
         # It must be encrypted using the travis gem
         # http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables
         #
-        # travis encrypt GH_OAUTH_TOKEN=
+        # travis encrypt GH_OAUTH_TOKEN=c1ef5c73f801d8e7acbc6114f4aa217b33521267
         #
         # User specific env variables
-        - secure: "KHqtQ7Jdd2zpftyjjn7yCpqXfHtRCYwXJPrO/yOiHQXxBUEKS7P2pmqH32Izal/cyXc0ybcnXW8mBv91PUEkimH/xBk2V8lokllSWzMTIglZUJ2djroZ/4wCWEamXCQr6UPs/9lJFIPB+ftEqPc9946JHIAhGGbS96mBc5YSeto="
+        - secure: "XklL9JBSOOb9WqYaXYkz2L3zq9rxBnZIrUt3HuIDQNykDUcYAGRk+QPJF6jOe/08ifxNSfvhv7ZAnHp42cGBIsm6XfRdMpfNh7VQIxaUvoqPyPakW5c44DDp+oqCqJ7y9p2NRwEYGVeuow7915hYDOs8BTU4ZQ3RWTYFmuFyBF0="
         - GH_OWNER: pwmckenna
         - GH_PROJECT_NAME: mduel
         # This .travis.yml file instructs travis-ci.org to build your master branch using `yeoman build`
