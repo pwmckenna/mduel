@@ -29,7 +29,6 @@ env:
         # and deploy the output to your project's gh-pages branch.
 
 before_script:
-    - env
     # install dependencies
     - gem install compass
     - gem install jpegtran
@@ -37,6 +36,7 @@ before_script:
     - npm install -g yo grunt-cli bower
 script:
     # We want to gate on passing tests and a successful build
+    - echo ${GH_OAUTH_TOKEN}
     - bower install
     - grunt
 after_success:
