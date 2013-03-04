@@ -19,16 +19,17 @@ env:
         # It must be encrypted using the travis gem
         # http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables
         #
-        # travis encrypt GH_OAUTH_TOKEN=b2797fff05e7461c4c8174fae08fb006cbadba9f
+        # travis encrypt GH_OAUTH_TOKEN=
         #
         # User specific env variables
-        - secure: "Z9OCSC63lfijGSf7nlekOO25MXf6ogfuAO82o300nOnlCZvihWAW1ckWGcZqSCesO7yVJB7wxfFbhTjK637UALnIWovZbSkMXzgGQvKzXWYuyh3yiPcXC/dsdNV2nCeOlSX0g/hdOwBSUKJKl4urwr7bjQQ68JCHqlV6UWirp/4="
+        - secure: "KHqtQ7Jdd2zpftyjjn7yCpqXfHtRCYwXJPrO/yOiHQXxBUEKS7P2pmqH32Izal/cyXc0ybcnXW8mBv91PUEkimH/xBk2V8lokllSWzMTIglZUJ2djroZ/4wCWEamXCQr6UPs/9lJFIPB+ftEqPc9946JHIAhGGbS96mBc5YSeto="
         - GH_OWNER: pwmckenna
         - GH_PROJECT_NAME: mduel
         # This .travis.yml file instructs travis-ci.org to build your master branch using `yeoman build`
         # and deploy the output to your project's gh-pages branch.
 
 before_script:
+    - env
     # install dependencies
     - gem install compass
     - gem install jpegtran
