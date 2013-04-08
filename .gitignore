@@ -3,3 +3,4 @@ temp
 dist
 .sass-cache
 app/scripts/components
+.DS_Store
