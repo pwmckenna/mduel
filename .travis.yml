@@ -22,7 +22,7 @@ env:
         # travis encrypt GH_OAUTH_TOKEN=XXXXXXXXXXXXXXX
         #
         # User specific env variables
-        - secure: "fa84C8sc62AvDM3zo1ZLat0E0Jo3cWwl80cNCfqZCI0o5RTxVo/GrtFfJOZ+gPJvR0oXuKwtZW6uIv/4qRWYJkxg88Gp+ga2aSQrpvoQ56ZjpBi5PYRnQPz5UsQi6wrKBktAmuNWCCM9FfISdq1xCgRrzmyNBwfIpaUDB2umLxE="
+        - secure: "AEA3mm0sP2aJoOFit80qXeIgdBNH6LR3OE45lJyDlRxMYBU4lHnwosZEQAbgWxPwPKC9/MC2CjzsN36NOKIQ8KN4Vg6j8TIK4JDPjViaWe9LvfD2e/Qkb5H3xV58aOm/E+XyFXdH5hYZ4PNUKApLjoi8/WyGrGGPigjdQK9aFag="
         - GH_OWNER: pwmckenna
         - GH_PROJECT_NAME: mduel
         # This .travis.yml file instructs travis-ci.org to build your master branch using `yeoman build`
@@ -30,9 +30,6 @@ env:
 
 before_script:
     # install dependencies
-    - gem install compass
-    - gem install jpegtran
-    - gem install optipng
     - npm install -g grunt-cli bower
 script:
     # We want to gate on passing tests and a successful build
